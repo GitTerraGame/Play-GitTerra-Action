@@ -4,5 +4,5 @@ spec:
       default: test
 ---
 component-job:
-  script: echo Let's play GitTerra!
+  script: echo "Let's play GitTerra!"
   stage: $[[ inputs.stage ]]
