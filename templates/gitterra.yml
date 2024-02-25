@@ -1,7 +1,7 @@
 spec:
   inputs:
     stage:
-      default: .post
+      default: build
 ---
 GitTerra:
   stage: $[[ inputs.stage ]]
