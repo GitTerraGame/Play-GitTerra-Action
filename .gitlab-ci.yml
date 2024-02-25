@@ -1,5 +1,5 @@
 include:
-  - template: templates/gitterra.yml
+  - local: "/templates/gitterra.yml"
 
 # If the pipeline is for a new tag with a semantic version, and all previous jobs succeed,
 # create the release.
