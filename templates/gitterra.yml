@@ -1,0 +1,8 @@
+spec:
+  inputs:
+    stage:
+      default: test
+---
+component-job:
+  script: echo job 1
+  stage: $[[ inputs.stage ]]
