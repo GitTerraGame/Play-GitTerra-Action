@@ -1,8 +1,13 @@
-spec:
-  inputs:
-    stage:
-      default: test
----
+stages:
+  - GitTerra
+
 GitTerra:
-  script: echo "Let's play GitTerra!"
   stage: $[[ inputs.stage ]]
+  script:
+    - echo "Let's play GitTerra!"
+    - mkdir maps
+    - touch maps/index.html
+  artifacts:
+    - path: maps/
+      name: gitterra-log
+      when: always
