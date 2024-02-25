@@ -6,7 +6,7 @@ GitTerra:
   script:
     - echo "Let's play GitTerra!"
     - set
-    - find .
+    - find . -not -path './.git' -not -path './.git/*'
     - touch gitterra.html
   artifacts:
     paths:
