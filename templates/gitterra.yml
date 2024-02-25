@@ -8,6 +8,6 @@ GitTerra:
     - mkdir maps
     - touch maps/index.html
   artifacts:
-    - path: maps/
-      name: gitterra-log
-      when: always
+    paths:
+      - maps/
+    expire_in: 1 week
