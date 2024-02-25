@@ -3,6 +3,6 @@ spec:
     stage:
       default: test
 ---
-component-job:
+GitTerra:
   script: echo "Let's play GitTerra!"
   stage: $[[ inputs.stage ]]
