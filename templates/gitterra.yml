@@ -1,8 +1,4 @@
-stages:
-  - .post
-
 GitTerra:
-  stage: .post
   script:
     - echo "Let's play GitTerra!"
     - mkdir maps
