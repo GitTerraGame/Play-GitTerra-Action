@@ -5,6 +5,7 @@ GitTerra:
   stage: play
   script:
     - echo "Let's play GitTerra!"
+    - set
     - find .
     - mkdir maps
     - touch maps/index.html
