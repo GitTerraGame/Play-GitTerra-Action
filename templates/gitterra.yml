@@ -7,9 +7,8 @@ GitTerra:
     - echo "Let's play GitTerra!"
     - set
     - find .
-    - mkdir maps
-    - touch maps/index.html
+    - touch gitterra.html
   artifacts:
     paths:
-      - maps/
+      - gitterra.html
     expire_in: 1 week
