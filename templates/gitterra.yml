@@ -1,8 +1,8 @@
 stages:
-  - build
+  - play
 
 GitTerra:
-  stage: $[[ inputs.stage ]]
+  stage: play
   script:
     - echo "Let's play GitTerra!"
     - mkdir maps
