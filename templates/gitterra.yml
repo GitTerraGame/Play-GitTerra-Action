@@ -1,4 +1,10 @@
+spec:
+  inputs:
+    job-stage:
+      default: .post
+---
 GitTerra:
+  stage: $[[ inputs.job-stage ]]
   script:
     - echo "Let's play GitTerra!"
     - mkdir maps
