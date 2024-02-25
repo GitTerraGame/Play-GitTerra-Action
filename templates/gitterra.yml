@@ -11,4 +11,3 @@ GitTerra:
   artifacts:
     paths:
       - gitterra.html
-    expire_in: 1 week
