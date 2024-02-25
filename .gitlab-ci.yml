@@ -1,13 +1,9 @@
 include:
   - local: "/templates/gitterra.yml"
 
-stages:
-  - release
-
 # If the pipeline is for a new tag with a semantic version, and all previous jobs succeed,
 # create the release.
 create-release:
-  stage: release
   image: registry.gitlab.com/gitlab-org/release-cli:latest
   rules:
     - if: $CI_COMMIT_TAG =~ /\d+/
