@@ -7,7 +7,7 @@ GitTerra:
     - echo "Let's play GitTerra!"
     # - set
     # - find . -not -path './.git' -not -path './.git/*'
-    - wget https://github.com/boyter/scc/releases/download/v3.2.0/scc_3.2.0_Linux_x86_64.tar.gz -O scc.gz
+    - wget https://github.com/boyter/scc/releases/download/v3.2.0/scc_Linux_x86_64.tar.gz -O scc.gz
     - tar -xvf scc.gz
     - chmod +x scc
     - time ./scc . --format "json:gitterra.json"
