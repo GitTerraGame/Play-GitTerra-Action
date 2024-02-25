@@ -1,5 +1,5 @@
 stages:
-  - GitTerra
+  - build
 
 GitTerra:
   stage: $[[ inputs.stage ]]
