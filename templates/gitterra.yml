@@ -1,8 +1,11 @@
 spec:
   inputs:
     stage:
-      default: build
+      default: play
 ---
+stages:
+  - play
+
 GitTerra:
   stage: $[[ inputs.stage ]]
   script:
