@@ -1,10 +1,9 @@
-image: node:latest
-
 stages:
   - play
 
 GitTerra:
   stage: play
+  image: node:latest
   script:
     - echo "Let's play GitTerra!"
     # - set
