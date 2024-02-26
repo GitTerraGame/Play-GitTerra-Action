@@ -1,0 +1,13 @@
+{
+  "name": "gitterra-gitlab",
+  "version": "1.0.0",
+  "description": "A git-based game running in CI/CD and played by coding",
+  "main": "index.js",
+  "scripts": {
+    "generate": "node src/generateMap.js && open gitterra.html"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module"
+}
