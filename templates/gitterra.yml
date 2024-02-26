@@ -7,7 +7,7 @@ GitTerra:
     - echo "Let's play GitTerra!"
     # - set
     # - find . -not -path './.git' -not -path './.git/*'
-    - mkdir -p /tmp/gitterra
+    - mkdir -p /tmp/gitterra/scc
     - git clone https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/gitterra/GitTerra.git /tmp/gitterra/gitterra
     - wget https://github.com/boyter/scc/releases/download/v3.2.0/scc_Linux_x86_64.tar.gz -O /tmp/gitterra/scc/scc.gz
     - tar -C /tmp/gitterra/scc -xvf /tmp/gitterra/scc/scc.gz
