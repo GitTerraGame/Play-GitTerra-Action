@@ -1,8 +1,8 @@
 stages:
-  - play
+  - "play GitTerra"
 
 GitTerra:
-  stage: play
+  stage: "play GitTerra"
   image: node:latest
   script:
     - echo "Let's play GitTerra!"
