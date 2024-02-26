@@ -131,7 +131,7 @@ export const generateMapHTML = function (total) {
             </a>
           </h1>
           <div id="feedback">
-            <a href="https://github.com/GitTerraGame/GitTerra/issues/new?template=feedback.md&amp;labels=feedback" target="_blank">
+            <a href="https://gitlab.com/gitterra/GitTerra/-/issues/new" target="_blank">
               How can we make this game better?
             </a>
           </div>
