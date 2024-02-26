@@ -11,7 +11,7 @@ include:
   - component: gitlab.com/gitterra/GitTerra/gitterra@~latest
 
 stages:
-  - play
+  - play GitTerra
 ```
 
 Now, every time you push to your repository, GitTerra will analyze your code and generate the game map.
