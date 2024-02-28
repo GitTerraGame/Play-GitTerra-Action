@@ -4,6 +4,7 @@ stages:
 GitTerra:
   stage: play GitTerra
   image: node:latest
+  needs: []
   script:
     - echo "Let's play GitTerra!"
     # - set
