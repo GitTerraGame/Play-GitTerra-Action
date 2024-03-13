@@ -8,5 +8,5 @@ branding:
 runs:
   using: "composite"
   steps:
-    - run: "Let's play GitTerra game"
+    - run: echo "Let's play GitTerra game"
       shell: "bash"
