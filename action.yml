@@ -1,0 +1,12 @@
+name: play-gitterra
+description: This action will let you play GitTerra game in your repository
+author: GitTerra Team
+branding:
+  icon: "map"
+  color: "blue"
+
+runs:
+  using: "composite"
+  steps:
+    - run: "Let's play GitTerra game"
+      shell: "bash"
