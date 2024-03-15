@@ -12,7 +12,7 @@ See instructions below on how to play GitTerra on your GitHub or GitLab reposito
 
 ### In GitHub repo
 
-To play GitTerra game on your GitHub repository, create a `.github/workflows/gitterra.yml` file with the following content:
+To play GitTerra game on your GitHub repository using a [GitTerra GitHub action](https://github.com/marketplace/actions/play-gitterra), create a `.github/workflows/gitterra.yml` file with the following content:
 
 ```yaml
 name: Play GitTerra
@@ -44,7 +44,7 @@ Replace `REPO-OWNER` with your GitHub username and `REPO` with your repository n
 
 ### In GitLab repo
 
-In order to play GitTerra in your GitLab repository, add the following lines to your `.gitlab-ci.yml` file:
+In order to play GitTerra in your GitLab repository using [GitTerra GitLab CI/CD Component](https://gitlab.com/explore/catalog/gitterra/GitTerra), add the following lines to your `.gitlab-ci.yml` file:
 
 ```yaml
 include:
