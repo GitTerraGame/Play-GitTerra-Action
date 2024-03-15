@@ -29,7 +29,7 @@ runs:
     - name: Transporting the builders to the construction site
       uses: actions/checkout@v4
       with:
-        repository: "https://github.com/GitTerraGame/Play-GitTerra-Action.git"
+        repository: "GitTerraGame/Play-GitTerra-Action"
         path: "builders"
 
     - name: Building the city of GitTerra
