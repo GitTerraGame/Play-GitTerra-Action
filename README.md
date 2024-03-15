@@ -32,6 +32,16 @@ jobs:
 
 You can tweak it further to run it on different events or branches.
 
+#### Add a badge to you README
+
+To add a badge at the top of your repo README file, use the following markdown code:
+
+```
+[![we play GitTerra](https://github.com/REPO-OWNER/REPO/actions/workflows/gitterra.yml/badge.svg)](https://github.com/REPO-OWNER/REPO/actions/workflows/gitterra.yml)
+```
+
+Replace `REPO-OWNER` with your GitHub username and `REPO` with your repository name.
+
 ### In GitLab repo
 
 In order to play GitTerra in your GitLab repository, add the following lines to your `.gitlab-ci.yml` file:
