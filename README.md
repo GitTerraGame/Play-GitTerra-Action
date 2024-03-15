@@ -4,7 +4,37 @@ A git-based game running in CI/CD and played by coding
 
 ## Playing the game
 
-In order to play GitTerra, add the following lines to your `.gitlab-ci.yml` file:
+Every time you push to your repository, GitTerra will analyze your code and generate the game map.
+
+You can see generated map of your city / code in the pipeline's artifacts - deploy it to a web server of your choice or download to a local machine, it is up to you.
+
+See instructions below on how to play GitTerra on your GitHub or GitLab repositories.
+
+### In GitHub repo
+
+To play GitTerra game on your GitHub repository, create a `.github/workflows/gitterra.yml` file with the following content:
+
+```yaml
+name: Play GitTerra
+run-name: Playing 🌎 GitTerra on ${{ github.repository }} 🗺️
+
+on:
+  push:
+    branches:
+      - main
+jobs:
+  play-gitterra:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Play GitTerra 🎮
+        uses: GitTerraGame/Play-GitTerra-Action@main
+```
+
+You can tweak it further to run it on different events or branches.
+
+### In GitLab repo
+
+In order to play GitTerra in your GitLab repository, add the following lines to your `.gitlab-ci.yml` file:
 
 ```yaml
 include:
@@ -13,10 +43,6 @@ include:
 stages:
   - play GitTerra
 ```
-
-Now, every time you push to your repository, GitTerra will analyze your code and generate the game map.
-
-You can see generated map of your city / code in the pipeline's artifacts - deploy it to a web server of your choice or download to a local machine direction from GitLab UI, it is up to you.
 
 ## Licenses
 

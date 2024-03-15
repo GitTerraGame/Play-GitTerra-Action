@@ -1,13 +1,19 @@
 {
-  "name": "gitterra-gitlab",
-  "version": "1.0.0",
+  "name": "gitterra",
+  "version": "1.0.1",
   "description": "A git-based game running in CI/CD and played by coding",
-  "main": "index.js",
+  "main": "src/generateMap.js",
   "scripts": {
     "generate": "node src/generateMap.js && open gitterra.html"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "game",
+    "git",
+    "ci",
+    "cd",
+    "coding"
+  ],
+  "author": "Chernyshev DEV",
+  "license": "MIT",
   "type": "module"
 }

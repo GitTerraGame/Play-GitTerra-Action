@@ -1,0 +1,47 @@
+name: play-gitterra
+description: This action will let you play GitTerra game in your repository
+author: GitTerra Team
+branding:
+  icon: "map"
+  color: "blue"
+
+runs:
+  using: "composite"
+  steps:
+    - run: echo "Let's play GitTerra game"
+      shell: "bash"
+
+    - name: Opening the scrolls of wisdom
+      uses: actions/checkout@v4
+      with:
+        path: "scrolls"
+
+    - name: Extracting the inner knowledge hidden inside the scrolls
+      id: scc
+      uses: iryanbell/scc-docker-action@v1.0.2
+      with:
+        args: scrolls -f json
+
+    - name: Recording the new knowledge for the city builders
+      run: echo "${{steps.scc.outputs.scc}}" > gitterra.json
+      shell: "bash"
+
+    - name: Transporting the builders to the construction site
+      uses: actions/checkout@v4
+      with:
+        repository: "https://github.com/GitTerraGame/Play-GitTerra-Action.git"
+        path: "builders"
+
+    - name: Building the city of GitTerra
+      run: node builders/src/generateMap.js
+      shell: "bash"
+
+    - name: List all the words in the story of our land
+      run: find .
+      shell: "bash"
+
+    - name: Archive the maps in the player's library
+      uses: actions/upload-artifact@v4
+      with:
+        name: gitterra
+        path: gitterra.*
