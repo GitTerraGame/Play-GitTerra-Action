@@ -16,14 +16,16 @@ runs:
       with:
         path: "scrolls"
 
-    - name: Extracting the inner knowledge hidden inside the scrolls
-      id: scc
-      uses: iryanbell/scc-docker-action@v1.0.2
-      with:
-        args: scrolls -f json
+    - name: Inviting the wizard to extract the inner knowledge
+      run: |
+        mkdir -p wizard
+        wget https://github.com/boyter/scc/releases/download/v3.2.0/scc_Linux_x86_64.tar.gz -O wizard/scc.gz
+        tar -C wizard -xvf scc.gz
+        chmod +x wizard/scc
+      shell: "bash"
 
-    - name: Recording the new knowledge for the city builders
-      run: echo "${{steps.scc.outputs.scc}}" > gitterra.json
+    - name: Extracting the inner knowledge hidden inside the scrolls
+      run: time wizard/scc scrolls/ --format json --output gitterra.json
       shell: "bash"
 
     - name: Transporting the builders to the construction site
