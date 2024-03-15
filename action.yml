@@ -20,7 +20,9 @@ runs:
       run: |
         mkdir -p wizard
         wget https://github.com/boyter/scc/releases/download/v3.2.0/scc_Linux_x86_64.tar.gz -O wizard/scc.gz
-        tar -C wizard -xvf scc.gz
+        find wizard/
+        tar -C wizard/ -xvf scc.gz
+        find wizard/
         chmod +x wizard/scc
       shell: "bash"
 
