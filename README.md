@@ -59,6 +59,16 @@ stages:
 If you'd like to configure the game, you can do so by adding a `.gitterra.config.js` file to the root of your repository. Here's an example of a `.gitterra.config.js` file:
 
 ```js
+module.exports = function (config) {
+  config.minTiles = 5;
+
+  return config;
+};
+```
+
+or if your project uses ES6 modules (e.g. your `package.json` contains `"type": "module"` property):
+
+```js
 export default (config) => {
   config.minTiles = 5;
 
