@@ -37,10 +37,6 @@ runs:
       run: node builders/src/generateMap.js scrolls/.gitterra.config.js
       shell: "bash"
 
-    - name: List all the words in the story of our land
-      run: find .
-      shell: "bash"
-
     - name: Archive the maps in the player's library
       uses: actions/upload-artifact@v4
       with:
