@@ -1,10 +1,29 @@
 import { generateMapHTML } from "./map.js";
-import fs from "fs";
+import { defaultGameConfig } from "./gameConfig.js";
 
-const MIN_TILES = 10;
+import fs from "fs";
+import path from "path";
 
 const input = "gitterra.json";
 const output = "gitterra.html";
+
+let gameConfig = defaultGameConfig;
+
+if (process.argv.length >= 3 && fs.existsSync(process.argv[2])) {
+  const fullPath = path.resolve(".", process.argv[2]);
+
+  console.log("Found custom configuration file: ", fullPath);
+
+  try {
+    const configuratorModule = await import(fullPath);
+
+    gameConfig = configuratorModule.default(gameConfig);
+  } catch (e) {
+    console.error("Error while reading custom configuration file: ", e);
+  }
+}
+
+console.log("[Game Configuration]\n", gameConfig);
 
 const repoStats = {
   total: {
@@ -51,8 +70,8 @@ const number_of_blocks = Math.round(
         1
     )) /
     3 +
-    MIN_TILES
+    gameConfig.minTiles
 );
 
-const mapHTML = generateMapHTML(number_of_blocks);
+const mapHTML = generateMapHTML(gameConfig, number_of_blocks);
 fs.writeFileSync(output, mapHTML);

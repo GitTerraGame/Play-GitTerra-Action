@@ -1,0 +1,67 @@
+[
+  {
+    "Name": "JavaScript",
+    "Bytes": 7187,
+    "CodeBytes": 0,
+    "Lines": 259,
+    "Code": 201,
+    "Comment": 27,
+    "Blank": 31,
+    "Complexity": 12,
+    "Count": 5,
+    "WeightedComplexity": 0,
+    "Files": []
+  },
+  {
+    "Name": "Markdown",
+    "Bytes": 4259,
+    "CodeBytes": 0,
+    "Lines": 77,
+    "Code": 49,
+    "Comment": 0,
+    "Blank": 28,
+    "Complexity": 0,
+    "Count": 3,
+    "WeightedComplexity": 0,
+    "Files": []
+  },
+  {
+    "Name": "YAML",
+    "Bytes": 2663,
+    "CodeBytes": 0,
+    "Lines": 88,
+    "Code": 73,
+    "Comment": 4,
+    "Blank": 11,
+    "Complexity": 0,
+    "Count": 3,
+    "WeightedComplexity": 0,
+    "Files": []
+  },
+  {
+    "Name": "JSON",
+    "Bytes": 415,
+    "CodeBytes": 0,
+    "Lines": 19,
+    "Code": 19,
+    "Comment": 0,
+    "Blank": 0,
+    "Complexity": 0,
+    "Count": 2,
+    "WeightedComplexity": 0,
+    "Files": []
+  },
+  {
+    "Name": "gitignore",
+    "Bytes": 18,
+    "CodeBytes": 0,
+    "Lines": 1,
+    "Code": 1,
+    "Comment": 0,
+    "Blank": 0,
+    "Complexity": 0,
+    "Count": 1,
+    "WeightedComplexity": 0,
+    "Files": []
+  }
+]

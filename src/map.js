@@ -35,14 +35,15 @@ function getMapTileCoordinates(n) {
     }
   }
 }
-export const generateMapHTML = function (total) {
+export const generateMapHTML = function (gameConfig, total) {
   // scale the image if total is too high
   const tileScale = 1;
 
   // actual image dimensions
-  const tileOriginalWidth = 200;
-  const highestTileOriginalHeight = 420;
-  const numberOfTileVariations = 11;
+  const tileOriginalWidth = gameConfig.tileSet.tileOriginalWidth;
+  const highestTileOriginalHeight =
+    gameConfig.tileSet.highestTileOriginalHeight;
+  const numberOfTileVariations = gameConfig.tileSet.numberOfTileVariations;
 
   // calculated dimensions based on scale
   const tileWidth = tileOriginalWidth * tileScale;
@@ -84,9 +85,7 @@ export const generateMapHTML = function (total) {
     (tile) =>
       `<img
       key=${tile.tileNumber}
-      src=${`https://gitterra.com/images/tiles/terraprime/tiles_v2-${tile.tileNumber
-        .toString()
-        .padStart(2, "0")}.png`}
+      src=${gameConfig.tileSet.getTileImageURL(tile.tileNumber)}
       width=${tileWidth}
       style="
         position: absolute;

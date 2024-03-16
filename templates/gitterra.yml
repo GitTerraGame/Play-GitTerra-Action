@@ -15,7 +15,7 @@ GitTerra:
     - tar -C /tmp/gitterra/scc -xvf /tmp/gitterra/scc/scc.gz
     - chmod +x /tmp/gitterra/scc/scc
     - time /tmp/gitterra/scc/scc . --format json --output gitterra.json
-    - node /tmp/gitterra/gitterra/src/generateMap.js
+    - node /tmp/gitterra/gitterra/src/generateMap.js .gitterra.config.js
   artifacts:
     paths:
       - gitterra.html

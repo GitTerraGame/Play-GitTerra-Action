@@ -54,6 +54,22 @@ stages:
   - play GitTerra
 ```
 
+### Configuring the game
+
+If you'd like to configure the game, you can do so by adding a `.gitterra.config.js` file to the root of your repository. Here's an example of a `.gitterra.config.js` file:
+
+```js
+export default (config) => {
+  config.minTiles = 5;
+
+  return config;
+};
+```
+
+It exports a function that takes a default configuration object and can adjust it to your needs. The example above sets the minimum number of tiles to 5.
+
+We'll be adding more configuration options as we build the project.
+
 ## Licenses
 
 GitTerra is an open source project by Sergey and Alexander Chernyshev of Chernyshev DEV. It is licensed under the [MIT License](LICENSE.md).

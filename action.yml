@@ -34,7 +34,7 @@ runs:
         path: "builders"
 
     - name: Building the city of GitTerra
-      run: node builders/src/generateMap.js
+      run: node builders/src/generateMap.js scrolls/.gitterra.config.js
       shell: "bash"
 
     - name: List all the words in the story of our land
