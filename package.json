@@ -1,6 +1,6 @@
 {
   "name": "gitterra",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A git-based game running in CI/CD and played by coding",
   "main": "src/generateMap.js",
   "scripts": {
