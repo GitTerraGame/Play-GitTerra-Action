@@ -1,3 +1,5 @@
+[![we play GitTerra](https://github.com/GitTerraGame/Play-GitTerra-Action/actions/workflows/gitterra.yml/badge.svg)](https://github.com/GitTerraGame/Play-GitTerra-Action/actions/workflows/gitterra.yml)
+
 # GitTerra
 
 A git-based game running in CI/CD and played by coding
