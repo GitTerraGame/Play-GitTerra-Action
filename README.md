@@ -24,6 +24,7 @@ on:
   push:
     branches:
       - main
+  pull_request:
 jobs:
   play-gitterra:
     runs-on: ubuntu-latest
@@ -32,7 +33,9 @@ jobs:
         uses: GitTerraGame/Play-GitTerra-Action@main
 ```
 
-You can tweak it further to run it on different events or branches. Most commonly, if your repository uses the legacy `master` branch instead of the `main` branch, you should change the `branches` value to `master`.
+You can tweak it further to run it on different events or branches.
+
+Most commonly, if your repository uses the legacy `master` branch instead of the `main` branch, you should change the `branches` value to `master`.
 
 #### Add a badge to you README
 
