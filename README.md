@@ -30,17 +30,19 @@ jobs:
         uses: GitTerraGame/Play-GitTerra-Action@main
 ```
 
-You can tweak it further to run it on different events or branches.
+You can tweak it further to run it on different events or branches. Most commonly, if your repository uses the legacy `master` branch instead of the `main` branch, you should change the `branches` value to `master`.
 
 #### Add a badge to you README
 
-To add a badge at the top of your repo README file, use the following markdown code:
+To add a clickable badge at the top of your repo README file, use the following markdown code:
 
 ```
 [![we play GitTerra](https://github.com/REPO-OWNER/REPO/actions/workflows/gitterra.yml/badge.svg)](https://github.com/REPO-OWNER/REPO/actions/workflows/gitterra.yml)
 ```
 
 Replace `REPO-OWNER` with your GitHub username and `REPO` with your repository name.
+
+The badge will display workflow status and by clicking on it you can go directly to "Play Gitterra" workflow and see all the runs. Click on individual run to see the Summary page and download gitterra artifact with a map.
 
 ### In GitLab repo
 
