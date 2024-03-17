@@ -1,0 +1,13 @@
+name: Play GitTerra
+run-name: Playing 🌎 GitTerra on ${{ github.repository }} 🗺️
+
+on:
+  push:
+    branches:
+      - main
+jobs:
+  play-gitterra:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Play GitTerra 🎮
+        uses: GitTerraGame/Play-GitTerra-Action@main
