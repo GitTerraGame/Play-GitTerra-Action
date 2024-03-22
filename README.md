@@ -37,6 +37,60 @@ You can tweak it further to run it on different events or branches.
 
 Most commonly, if your repository uses the legacy `master` branch instead of the `main` branch, you should change the `branches` value to `master`.
 
+#### Deploy the map to GitHub Pages
+
+If you don't use GitHub Pages hosting for anything else in your repo, it might be the easies place to put your GitTerra map. You just need to add some permissions and one more job to the workflow file. Here's the full workflow you can use:
+
+```yaml
+name: Play GitTerra
+run-name: Playing 🌎 GitTerra on ${{ github.repository }} 🗺️
+
+on:
+  push:
+    branches:
+      - main
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  play-gitterra:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Play GitTerra 🎮
+        uses: GitTerraGame/Play-GitTerra@main
+  deploy-gitterra-to-gh-pages:
+    needs: play-gitterra
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: gitterra
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "."
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+```
+
+Keep in mind that you have to go to the repository settings and pick `GitHub Actions` as a source in "Build and Deployment" section of GitHub Pages settings for your repo. We didn't want to automate that configuration for you, to make sure you don't replace your production website with this.
+
 #### Add a badge to you README
 
 To add a clickable badge at the top of your repo README file, use the following markdown code:
