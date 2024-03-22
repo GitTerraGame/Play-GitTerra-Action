@@ -1,3 +1,5 @@
+import { pathToFileURL } from "url";
+
 import { generateMapHTML } from "./map.js";
 import { defaultGameConfig } from "./gameConfig.js";
 
@@ -5,7 +7,7 @@ import fs from "fs";
 import path from "path";
 
 const input = "gitterra.json";
-const output = "gitterra.html";
+const output = "index.html";
 
 let gameConfig = defaultGameConfig;
 
@@ -15,7 +17,7 @@ if (process.argv.length >= 3 && fs.existsSync(process.argv[2])) {
   console.log("Found custom configuration file: ", fullPath);
 
   try {
-    const configuratorModule = await import(fullPath);
+    const configuratorModule = await import(pathToFileURL(fullPath));
 
     gameConfig = configuratorModule.default(gameConfig);
   } catch (e) {

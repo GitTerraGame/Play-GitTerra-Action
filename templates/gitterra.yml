@@ -18,5 +18,5 @@ GitTerra:
     - node /tmp/gitterra/gitterra/src/generateMap.js .gitterra.config.js
   artifacts:
     paths:
-      - gitterra.html
+      - index.html
       - gitterra.json

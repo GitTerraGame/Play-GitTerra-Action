@@ -4,7 +4,7 @@
   "description": "A git-based game running in CI/CD and played by coding",
   "main": "src/generateMap.js",
   "scripts": {
-    "test": "cd test && node ../src/generateMap.js .gitterra.config.js && open gitterra.html"
+    "test": "cd test && node ../src/generateMap.js .gitterra.config.js && open-cli index.html"
   },
   "keywords": [
     "game",
@@ -15,5 +15,8 @@
   ],
   "author": "Chernyshev DEV",
   "license": "MIT",
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "open-cli": "^8.0.0"
+  }
 }
