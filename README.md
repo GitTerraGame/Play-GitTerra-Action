@@ -2,9 +2,7 @@
 
 # GitTerra
 
-A git-based game running in CI/CD and played by coding
-
-## Playing the game
+A git-based game running in CI/CD and played by coding!
 
 Every time you push to your repository, GitTerra will analyze your code and generate the game map.
 
@@ -12,7 +10,7 @@ You can see generated map of your city / code in the pipeline's artifacts - depl
 
 See instructions below on how to play GitTerra on your GitHub or GitLab repositories.
 
-### In GitHub repo
+## In GitHub repo
 
 To play GitTerra game on your GitHub repository using a [GitTerra GitHub action](https://github.com/marketplace/actions/play-gitterra), create a `.github/workflows/gitterra.yml` file with the following content:
 
@@ -37,9 +35,9 @@ You can tweak it further to run it on different events or branches.
 
 Most commonly, if your repository uses the legacy `master` branch instead of the `main` branch, you should change the `branches` value to `master`.
 
-#### Deploy the map to GitHub Pages
+### Deploy the map to GitHub Pages
 
-If you don't use GitHub Pages hosting for anything else in your repo, it might be the easies place to put your GitTerra map. You just need to add some permissions and one more job to the workflow file. Here's the full workflow you can use:
+If you don't use GitHub Pages hosting for anything else in your repo, it might be the easiest place to put your GitTerra map. You just need to add some permissions and one more job to the workflow file. Here's the full workflow you can use:
 
 ```yaml
 name: Play GitTerra
@@ -91,7 +89,7 @@ jobs:
 
 Keep in mind that you have to go to the repository settings and pick `GitHub Actions` as a source in "Build and Deployment" section of GitHub Pages settings for your repo. We didn't want to automate that configuration for you, to make sure you don't replace your production website with this.
 
-#### Add a badge to you README
+### Add a badge to you README
 
 To add a clickable badge at the top of your repo README file, use the following markdown code:
 
@@ -103,7 +101,7 @@ Replace `REPO-OWNER` with your GitHub username and `REPO` with your repository n
 
 The badge will display workflow status and by clicking on it you can go directly to "Play Gitterra" workflow and see all the runs. Click on individual run to see the Summary page and download gitterra artifact with a map.
 
-### In GitLab repo
+## In GitLab repo
 
 In order to play GitTerra in your GitLab repository using [GitTerra GitLab CI/CD Component](https://gitlab.com/explore/catalog/gitterra/GitTerra), add the following lines to your `.gitlab-ci.yml` file:
 
@@ -115,7 +113,22 @@ stages:
   - play GitTerra
 ```
 
-### Configuring the game
+### Deploy the map to GitLab Pages
+
+If you don't use GitLab Pages hosting for anything else in your repo, it might be the easiest place to put your GitTerra map. You just need to add `GitTerra/pages` component to `.gitlab-ci.yml` file. Here's the full pipeline you can use:
+
+```yaml
+include:
+  - component: gitlab.com/gitterra/GitTerra/gitterra@~latest
+  - component: gitlab.com/gitterra/GitTerra/pages@~latest
+
+stages:
+  - play GitTerra
+```
+
+Please don't use this if you already use GitLab Pages in your project - this will override your main GitLab Pages website with GitTerra map.
+
+## Configuring the game
 
 If you'd like to configure the game, you can do so by adding a `.gitterra.config.js` file to the root of your repository. Here's an example of a `.gitterra.config.js` file:
 
