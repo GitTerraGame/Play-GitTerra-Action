@@ -1,0 +1,19 @@
+stages:
+  - play GitTerra
+
+pages:
+  stage: play GitTerra
+  image: node:latest
+  needs: [GitTerra]
+  script:
+    - mkdir public/
+    - mv index.html public/
+    - mv gitterra.json public/
+  artifacts:
+    paths:
+      # The folder that contains the files to be exposed at the Page URL
+      - public
+  rules:
+    # This ensures that only pushes to the default branch will trigger
+    # a pages deploy
+    - if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
