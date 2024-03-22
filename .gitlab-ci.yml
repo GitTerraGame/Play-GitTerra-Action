@@ -21,7 +21,6 @@ pages:
   stage: play GitTerra
   needs: [GitTerra]
   script:
-    - find .
     - mkdir public/
     - mv index.html public/
     - mv gitterra.json public/
