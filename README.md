@@ -1,4 +1,4 @@
-[![we play GitTerra](https://github.com/GitTerraGame/Play-GitTerra-Action/actions/workflows/gitterra.yml/badge.svg)](https://github.com/GitTerraGame/Play-GitTerra-Action/actions/workflows/gitterra.yml)
+[![we play GitTerra](https://github.com/GitTerraGame/Play-GitTerra-Action/actions/workflows/gitterra.yml/badge.svg)](https://gitterragame.github.io/Play-GitTerra-Action/)
 
 # GitTerra
 
