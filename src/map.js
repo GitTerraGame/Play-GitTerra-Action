@@ -23,7 +23,7 @@ function getMapTileCoordinates(n) {
     // boolean representing the side of the diamond, e.g. left (false) or right (true)
     const direction =
       Math.ceil((n - Math.pow(Math.floor(Math.sqrt(n)), 2)) / 2) -
-        Math.floor((n - Math.pow(Math.floor(Math.sqrt(n)), 2)) / 2) ===
+      Math.floor((n - Math.pow(Math.floor(Math.sqrt(n)), 2)) / 2) ===
       0;
 
     if (direction) {
@@ -98,6 +98,13 @@ export const generateMapHTML = function (gameConfig, total) {
   return `<!doctype html>
       <html>
         <head>
+          <meta
+            property="og:image"
+            content="https://gitterra.com/images/background_and_menus/logobanner.svg"
+          />
+          <meta property="og:image:type" content="image/svg" />
+          <link rel="icon" type="image/png" href="https://gitterra.com/images/logo.png" />
+          <title>Your Repo Map | GitTerra</title>
           <style>
           h1,
           #feedback {
@@ -118,7 +125,7 @@ export const generateMapHTML = function (gameConfig, total) {
             max-width: 15em;
           }
           </style>
-          <title>Your Repo Map | GitTerra</title>
+          
         </head>
         <body>
           <h1>

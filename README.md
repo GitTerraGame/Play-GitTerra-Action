@@ -2,13 +2,19 @@
 
 # GitTerra
 
+<div style="display: flex; flex-direction: column; align-items: center; margin-bottom: 2em">
+<img src="https://gitterra.com/images/background_and_menus/logobanner.svg" alt="Gitterra Guide Title Pic" style="height: 10em">
+</div>
+
 A git-based game running in CI/CD and played by coding!
 
 Every time you push to your repository, GitTerra will analyze your code and generate the game map.
 
 You can see generated map of your city / code in the pipeline's artifacts - deploy it to GitHub / GitLab Pages, a web server of your choice or download to a local machine, it is up to you.
 
-See instructions below on how to play GitTerra on your GitHub or GitLab repositories.
+See instructions below on how to play GitTerra on your [GitHub](#in-github-repo) or [GitLab](#in-gitlab-repo) repositories.
+
+![A built map](/docs/generated_map.png)
 
 ## In GitHub repo
 
