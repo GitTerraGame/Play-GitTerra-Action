@@ -2,6 +2,8 @@
 
 # GitTerra
 
+Temporary test of pull request
+
 <img src="https://gitterra.com/images/background_and_menus/logobanner.svg" alt="Gitterra Guide Title Pic" style="height: 10em; width:100%; margin-bottom:2em">
 
 A git-based game running in CI/CD and played by coding!
