@@ -23,7 +23,7 @@ function getMapTileCoordinates(n) {
     // boolean representing the side of the diamond, e.g. left (false) or right (true)
     const direction =
       Math.ceil((n - Math.pow(Math.floor(Math.sqrt(n)), 2)) / 2) -
-      Math.floor((n - Math.pow(Math.floor(Math.sqrt(n)), 2)) / 2) ===
+        Math.floor((n - Math.pow(Math.floor(Math.sqrt(n)), 2)) / 2) ===
       0;
 
     if (direction) {
@@ -35,7 +35,26 @@ function getMapTileCoordinates(n) {
     }
   }
 }
-export const generateMapHTML = function (gameConfig, total) {
+
+/**
+ * Returns a tile number from a tileset based on the cluster of files
+ * It currently uses total number of lines of code as a seed for the tile number
+ *
+ * @param {*} cluster an array of file objects tile represents
+ * @param {*} numberOfTileVariations the number of tile variations in the tileset
+ *
+ * @returns {int} a 1-based number of the tile
+ */
+function getTileNumber(cluster, numberOfTileVariations) {
+  const totalLinesInCluster = cluster.reduce(
+    (acc, [file]) => acc + file.Lines,
+    0
+  );
+
+  return (totalLinesInCluster % numberOfTileVariations) + 1;
+}
+
+export const generateMapHTML = function (gameConfig, clusters) {
   // scale the image if total is too high
   const tileScale = 1;
 
@@ -57,7 +76,7 @@ export const generateMapHTML = function (gameConfig, total) {
 
   const tiles = [];
 
-  for (let i = total; i >= 1; i--) {
+  for (let i = clusters.length; i >= 1; i--) {
     const blockCoordinates = getMapTileCoordinates(i);
 
     const isoX =
@@ -76,7 +95,7 @@ export const generateMapHTML = function (gameConfig, total) {
       highestIsoY = isoY;
     }
 
-    const tileNumber = Math.floor(Math.random() * numberOfTileVariations) + 1;
+    const tileNumber = getTileNumber(clusters[i - 1], numberOfTileVariations);
 
     tiles.push({ tileNumber, isoX, isoY });
   }

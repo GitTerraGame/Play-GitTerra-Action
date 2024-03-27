@@ -24,14 +24,18 @@ runs:
       shell: "bash"
 
     - name: Extracting the inner knowledge hidden inside the scrolls
-      run: time wizard/scc scrolls/ --format json --output gitterra.json
+      run: time wizard/scc scrolls/ --by-file --format json --output gitterra.json
       shell: "bash"
 
-    - name: Transporting the builders to the construction site
+    - name: Transporting builders to the construction site
       uses: actions/checkout@v4
       with:
         repository: "GitTerraGame/Play-GitTerra-Action"
         path: "builders"
+
+    - name: Equipping builders with the tools
+      run: (cd builders && npm install)
+      shell: "bash"
 
     - name: Building the city of GitTerra
       run: node builders/src/generateMap.js scrolls/.gitterra.config.js
@@ -43,4 +47,3 @@ runs:
         name: gitterra
         path: |
           index.html
-          gitterra.json

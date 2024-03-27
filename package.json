@@ -17,6 +17,7 @@
   "license": "MIT",
   "type": "module",
   "dependencies": {
+    "kmeansjs": "^0.0.3",
     "open-cli": "^8.0.0"
   }
 }
