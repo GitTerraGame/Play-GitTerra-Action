@@ -8,7 +8,6 @@ pages:
   script:
     - mkdir public/
     - mv index.html public/
-    - mv gitterra.json public/
   artifacts:
     paths:
       # The folder that contains the files to be exposed at the Page URL
