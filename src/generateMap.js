@@ -2,6 +2,7 @@ import { pathToFileURL } from "url";
 
 import { generateMapHTML } from "./map.js";
 import { defaultGameConfig } from "./gameConfig.js";
+import clusterize from "./clusterize.js";
 
 import fs from "fs";
 import path from "path";
@@ -48,6 +49,9 @@ const repoStats = {
   },
 };
 
+/*
+ * Calculating global statistics to determine the number of city blocks
+ */
 const repo = JSON.parse(fs.readFileSync(input, "utf8"));
 repo.forEach((elem) => {
   repoStats.total.bytes += elem.Bytes;
@@ -75,5 +79,11 @@ const number_of_blocks = Math.round(
     gameConfig.minTiles
 );
 
-const mapHTML = generateMapHTML(gameConfig, number_of_blocks);
+/**
+ * Deterministicly group files into clusters for each city block
+ */
+const files = repo.map((elem) => elem.Files).flat();
+const clusters = await clusterize(files, number_of_blocks);
+
+const mapHTML = generateMapHTML(gameConfig, clusters);
 fs.writeFileSync(output, mapHTML);
