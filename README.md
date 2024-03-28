@@ -16,7 +16,7 @@ See instructions below on how to play GitTerra on your [GitHub](#in-github-repo)
 
 ## In GitHub repo
 
-To play GitTerra game on your GitHub repository using a [GitTerra GitHub action](https://github.com/marketplace/actions/play-gitterra), create a `.github/workflows/gitterra.yml` file with the following content:
+To play GitTerra game on your GitHub repository using a [GitTerra GitHub action](https://github.com/marketplace/actions/play-gitterra), create a `/.github/workflows/gitterra.yml` file (make sure to spell folder names correctly, as that's where GitHub looks for CI/CD workflows) with the following content:
 
 ```yaml
 name: Play GitTerra
@@ -41,7 +41,7 @@ Most commonly, if your repository uses the legacy `master` branch instead of the
 
 ### Deploy the map to GitHub Pages
 
-If you don't use GitHub Pages hosting for anything else in your repo, it might be the easiest place to put your GitTerra map. You just need to add some permissions and one more job to the workflow file. Here's the full workflow you can use:
+If you don't use GitHub Pages hosting for anything else in your repo, it might be the easiest place to put your GitTerra map. You just need to add some permissions and one more job to the `/.github/workflow/gitterra.yml` workflow file. Here's the full workflow you can use:
 
 ```yaml
 name: Play GitTerra
@@ -107,7 +107,7 @@ The badge will display workflow status and by clicking on it you can go directly
 
 ## In GitLab repo
 
-In order to play GitTerra in your GitLab repository using [GitTerra GitLab CI/CD Component](https://gitlab.com/explore/catalog/gitterra/GitTerra), add the following lines to your `.gitlab-ci.yml` file:
+In order to play GitTerra in your GitLab repository using [GitTerra GitLab CI/CD Component](https://gitlab.com/explore/catalog/gitterra/GitTerra), add the following lines to your `.gitlab-ci.yml` file (in the root of the repository):
 
 ```yaml
 include:
@@ -119,7 +119,7 @@ stages:
 
 ### Deploy the map to GitLab Pages
 
-If you don't use GitLab Pages hosting for anything else in your repo, it might be the easiest place to put your GitTerra map. You just need to add `GitTerra/pages` component to `.gitlab-ci.yml` file. Here's the full pipeline you can use:
+If you don't use GitLab Pages hosting for anything else in your repo, it might be the easiest place to put your GitTerra map. You just need to add `GitTerra/pages` component to `.gitlab-ci.yml` file (in the root of the repository). Here's the full pipeline you can use:
 
 ```yaml
 include:
@@ -157,6 +157,28 @@ export default (config) => {
 It exports a function that takes a default configuration object and can adjust it to your needs. The example above sets the minimum number of tiles to 5.
 
 We'll be adding more configuration options as we build the project.
+
+## Data Access and Privacy
+
+GitTerra code runs in your CI/CD pipeline and doesn't share any of your code or data with creators of the game. It only generates the map and makes it available to you in the pipeline's artifacts.
+
+You can download the map and store it wherever you want. Keep in mind that if you publish the map to GitHub or GitLab pages, those are public websites and anyone with the link can access the map, however we strive to make sure that no sensitive data is included in the map.
+
+Let us know if you see any leaking of private information in the map and we'll do our best to fix it and give you control over how much you want to share.
+
+### Analytics and Data Collection
+
+We currently don't have any code that sends any analytics back to us. We don't collect any data about your code or your repository. We don't track your usage of the game.
+
+Game resources, like UI graphics and game tile images for default tile sets are served from our static site on a CDN, but we don't collect any data about who accesses those resources.
+
+#### Future Plans
+
+We are planning to add some analytics in the future to understand how the game is used and how we can improve it, but we'll make sure to only send anonimized data and give you an option to opt-in or opt-out.
+
+Our plan is to only collect data for public repositories by default and allow you to opt-in for private repositories or opt-out completely. By default, when we will collect the data, we will generate a unique repository identifier that will not contain any information that can be used to identify the repository or the owner. We will only collect the information on when the map was generated and basics statistics about the map, similarly to the data shared in the map itself.
+
+The code for data collection will be open source like the rest of the project and you will be able to see what data we collect and how we use it.
 
 ## Licenses
 
