@@ -76,8 +76,10 @@ export const generateMapHTML = function (gameConfig, clusters) {
 
   const tiles = [];
 
-  for (let i = clusters.length; i >= 1; i--) {
-    const blockCoordinates = getMapTileCoordinates(i);
+  console.log(clusters);
+
+  for (let i = 0; i < clusters.length; i++) {
+    const blockCoordinates = getMapTileCoordinates(i + 1);
 
     const isoX =
       (blockCoordinates.x * tileWidth) / 2 - blockCoordinates.y * tileHeight;
@@ -95,7 +97,7 @@ export const generateMapHTML = function (gameConfig, clusters) {
       highestIsoY = isoY;
     }
 
-    const tileNumber = getTileNumber(clusters[i - 1], numberOfTileVariations);
+    const tileNumber = getTileNumber(clusters[i], numberOfTileVariations);
 
     tiles.push({ tileNumber, isoX, isoY });
   }
