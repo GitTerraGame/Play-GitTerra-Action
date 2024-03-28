@@ -46,12 +46,20 @@ function getMapTileCoordinates(n) {
  * @returns {int} a 1-based number of the tile
  */
 function getTileNumber(cluster, numberOfTileVariations) {
-  const totalLinesInCluster = cluster.reduce(
-    (acc, [file]) => acc + file.Lines,
-    0
-  );
+  let tileNumber = 0;
 
-  return (totalLinesInCluster % numberOfTileVariations) + 1;
+  try {
+    const totalLinesInCluster = cluster.reduce(
+      (acc, [file]) => acc + file.Lines,
+      0
+    );
+
+    tileNumber = (totalLinesInCluster % numberOfTileVariations) + 1;
+  } catch (error) {
+    tileNumber = Math.floor(Math.random() * numberOfTileVariations) + 1;
+  }
+
+  return tileNumber;
 }
 
 export const generateMapHTML = function (gameConfig, clusters) {
@@ -76,10 +84,8 @@ export const generateMapHTML = function (gameConfig, clusters) {
 
   const tiles = [];
 
-  console.log(clusters);
-
-  for (let i = 0; i < clusters.length; i++) {
-    const blockCoordinates = getMapTileCoordinates(i + 1);
+  for (let i = clusters.length; i >= 1; i--) {
+    const blockCoordinates = getMapTileCoordinates(i);
 
     const isoX =
       (blockCoordinates.x * tileWidth) / 2 - blockCoordinates.y * tileHeight;
@@ -97,7 +103,7 @@ export const generateMapHTML = function (gameConfig, clusters) {
       highestIsoY = isoY;
     }
 
-    const tileNumber = getTileNumber(clusters[i], numberOfTileVariations);
+    const tileNumber = getTileNumber(clusters[i - 1], numberOfTileVariations);
 
     tiles.push({ tileNumber, isoX, isoY });
   }
