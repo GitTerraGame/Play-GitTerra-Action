@@ -16,7 +16,7 @@ See instructions below on how to play GitTerra on your [GitHub](#in-github-repo)
 
 ## In GitHub repo
 
-To play GitTerra game on your GitHub repository using a [GitTerra GitHub action](https://github.com/marketplace/actions/play-gitterra), create a `/.github/workflows/gitterra.yml` file (make sure to spell folder names correctly, as that's where GitHub looks for CI/CD workflows) with the following content:
+To play GitTerra game on your GitHub repository using a [GitTerra GitHub action](https://github.com/marketplace/actions/play-gitterra), create a `.github/workflows/gitterra.yml` file (make sure to spell folder names correctly, as that's where GitHub looks for CI/CD workflows) with the following content:
 
 ```yaml
 name: Play GitTerra
@@ -41,7 +41,7 @@ Most commonly, if your repository uses the legacy `master` branch instead of the
 
 ### Deploy the map to GitHub Pages
 
-If you don't use GitHub Pages hosting for anything else in your repo, it might be the easiest place to put your GitTerra map. You just need to add some permissions and one more job to the `/.github/workflow/gitterra.yml` workflow file. Here's the full workflow you can use:
+If you don't use GitHub Pages hosting for anything else in your repo, it might be the easiest place to put your GitTerra map. You just need to add some permissions and one more job to the `.github/workflows/gitterra.yml` workflow file. Here's the full workflow you can use:
 
 ```yaml
 name: Play GitTerra
