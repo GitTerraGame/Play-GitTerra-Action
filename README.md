@@ -2,7 +2,7 @@
 
 # GitTerra
 
-<img src="https://gitterra.com/images/background_and_menus/logobanner.svg" alt="Gitterra Guide Title Pic" style="height: 10em; width:100%; margin-bottom:2em">
+<img src="https://gitterra.com/images/background_and_menus/logobanner.svg" alt="Git Terra Guide Title Pic" style="height: 10em; width:100%; margin-bottom:2em">
 
 A git-based game running in CI/CD and played by coding!
 
@@ -10,13 +10,13 @@ Every time you push to your repository, GitTerra will analyze your code and gene
 
 You can see generated map of your city / code in the pipeline's artifacts - deploy it to GitHub / GitLab Pages, a web server of your choice or download to a local machine, it is up to you.
 
-See instructions below on how to play GitTerra on your [GitHub](#in-github-repo) or [GitLab](#in-gitlab-repo) repositories.
+See instructions below on how to play Git Terra on your [GitHub](#in-github-repo) or [GitLab](#in-gitlab-repo) repositories.
 
 ![A built map](/docs/generated_map.png)
 
 ## In GitHub repo
 
-To play GitTerra game on your GitHub repository using a [GitTerra GitHub action](https://github.com/marketplace/actions/play-gitterra), create a `.github/workflows/gitterra.yml` file (make sure to spell folder names correctly, as that's where GitHub looks for CI/CD workflows) with the following content:
+To play Git Terra game on your GitHub repository using a [GitTerra GitHub action](https://github.com/marketplace/actions/play-gitterra), create a `.github/workflows/gitterra.yml` file (make sure to spell folder names correctly, as that's where GitHub looks for CI/CD workflows) with the following content:
 
 ```yaml
 name: Play GitTerra
