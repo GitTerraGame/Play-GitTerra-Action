@@ -185,3 +185,5 @@ The code for data collection will be open source like the rest of the project an
 GitTerra is an open source project by Sergey and Alexander Chernyshev of Chernyshev DEV. It is licensed under the [MIT License](LICENSE.md).
 
 We also use [SCC](https://github.com/boyter/scc), a code analysis software by Ben Boyter to help us get data about your code to build the map. SCC is licensed under the [MIT License](LICENSE.scc.md).
+
+We also use language color info from GitHub [linguist](https://github.com/github-linguist/linguist) project, which is licensed under the [MIT License](LICENSE.linguist.md).
