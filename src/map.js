@@ -31,7 +31,7 @@ function getMapTileCoordinates(n) {
     // boolean representing the side of the diamond, e.g. left (false) or right (true)
     const direction =
       Math.ceil((n - Math.pow(Math.floor(Math.sqrt(n)), 2)) / 2) -
-        Math.floor((n - Math.pow(Math.floor(Math.sqrt(n)), 2)) / 2) ===
+      Math.floor((n - Math.pow(Math.floor(Math.sqrt(n)), 2)) / 2) ===
       0;
 
     if (direction) {
@@ -148,8 +148,8 @@ export const generateMapHTML = function (gameConfig, clusters) {
       return;
     }
 
-    const primaryColorLighter = ColorLuminance(primaryColor, 0.2);
-    const primaryColorDarker = ColorLuminance(primaryColor, -0.2);
+    const primaryColorLighter = ColorLuminance(primaryColor, 0.3);
+    const primaryColorDarker = ColorLuminance(primaryColor, -0.3);
 
     languageStyles += `
     .${languageClass} {
@@ -172,14 +172,14 @@ export const generateMapHTML = function (gameConfig, clusters) {
       tileWidth / 2 +
       ((tile.blockCoordinates.x - 1 - (tile.blockCoordinates.y - 1)) *
         tileWidth) /
-        2;
+      2;
 
     tile.isoY = Math.round(
       mapHeight -
-        ((tile.blockCoordinates.x - 1 + tile.blockCoordinates.y - 1) *
-          tileBaseHeight) /
-          2 -
-        highestTileHeight
+      ((tile.blockCoordinates.x - 1 + tile.blockCoordinates.y - 1) *
+        tileBaseHeight) /
+      2 -
+      highestTileHeight
     );
 
     if (tile.isoY < lowestIsoY) {

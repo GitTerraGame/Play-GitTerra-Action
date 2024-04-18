@@ -1,9 +1,9 @@
 import url from "url";
 
 const novaTerraPrime = {
-  numberOfTileVariations: 2,
+  numberOfTileVariations: 10,
   tileOriginalWidth: 2013,
-  highestTileOriginalHeight: 1774,
+  highestTileOriginalHeight: 2710,
   tileFolder: url.fileURLToPath(
     import.meta.resolve("../images/tiles/novaterraprime")
   ),
