@@ -1,0 +1,36 @@
+[
+  {
+    "Name": "JavaScript",
+    "Bytes": 9244,
+    "CodeBytes": 0,
+    "Lines": 332,
+    "Code": 240,
+    "Comment": 48,
+    "Blank": 44,
+    "Complexity": 14,
+    "Count": 6,
+    "WeightedComplexity": 0,
+    "Files": [
+      {
+        "Language": "JavaScript",
+        "PossibleLanguages": ["JavaScript"],
+        "Filename": "clusterize.js",
+        "Extension": "js",
+        "Location": "src/clusterize.js",
+        "Symlocation": "",
+        "Bytes": 503,
+        "Lines": 22,
+        "Code": 17,
+        "Comment": 0,
+        "Blank": 5,
+        "Complexity": 2,
+        "WeightedComplexity": 0,
+        "Hash": null,
+        "Callback": null,
+        "Binary": false,
+        "Minified": false,
+        "Generated": false
+      }
+    ]
+  }
+]

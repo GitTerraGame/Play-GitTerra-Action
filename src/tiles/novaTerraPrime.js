@@ -1,10 +1,9 @@
+import url from "url";
+
 const novaTerraPrime = {
-  numberOfTileVariations: 10,
-  tileOriginalWidth: 200,
-  highestTileOriginalHeight: 300,
-  getTileImageURL: function (tileNumber) {
-    return `https://gitterra.com/images/tiles/novaterraprime/novaterraprime_tile_${tileNumber}.svg`;
-  },
+  tileFolder: url.fileURLToPath(
+    import.meta.resolve("../images/tiles/novaterraprime")
+  ),
 };
 
 export default novaTerraPrime;
