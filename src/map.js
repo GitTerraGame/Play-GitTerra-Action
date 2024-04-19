@@ -31,7 +31,7 @@ function getMapTileCoordinates(n) {
     // boolean representing the side of the diamond, e.g. left (false) or right (true)
     const direction =
       Math.ceil((n - Math.pow(Math.floor(Math.sqrt(n)), 2)) / 2) -
-      Math.floor((n - Math.pow(Math.floor(Math.sqrt(n)), 2)) / 2) ===
+        Math.floor((n - Math.pow(Math.floor(Math.sqrt(n)), 2)) / 2) ===
       0;
 
     if (direction) {
@@ -49,12 +49,12 @@ function getMapTileCoordinates(n) {
  * It currently uses total number of lines of code as a seed for the tile number
  *
  * @param {*} cluster an array of file objects tile represents
- * @param {*} numberOfTileVariations the number of tile variations in the tileset
+ * @param {*} sprites sprite objects array
  *
- * @returns {int} a 1-based number of the tile
+ * @returns {sprite} a sprite object chosen for the cluster
  */
-function getTileNumber(cluster, numberOfTileVariations) {
-  let tileNumber = 0;
+function getSprite(cluster, sprites) {
+  let spriteIndex = 0;
 
   try {
     const totalLinesInCluster = cluster.reduce(
@@ -62,12 +62,12 @@ function getTileNumber(cluster, numberOfTileVariations) {
       0
     );
 
-    tileNumber = (totalLinesInCluster % numberOfTileVariations) + 1;
+    spriteIndex = totalLinesInCluster % sprites.length;
   } catch (error) {
-    tileNumber = Math.floor(Math.random() * numberOfTileVariations) + 1;
+    spriteIndex = Math.floor(Math.random() * sprites.length);
   }
 
-  return tileNumber;
+  return sprites[spriteIndex];
 }
 
 function getTileLanguage(cluster) {
@@ -106,12 +106,42 @@ function ColorLuminance(hex, lum) {
 // console.log("primary color (darker)", ColorLuminance("#1c70be", -0.2));
 
 export const generateMapHTML = function (gameConfig, clusters) {
-  // calculated dimensions based on scale
-  const numberOfTileVariations = gameConfig.tileSet.numberOfTileVariations;
-  const tileWidth = gameConfig.tileSet.tileOriginalWidth;
+  let tileWidth = 0;
+  let tallestSprite = 0;
+  const sprites = fs
+    .readdirSync(gameConfig.tileSet.tileFolder)
+    .filter((file) => {
+      return file.endsWith(".svg");
+    })
+    .map((file) => {
+      const svg = fs.readFileSync(
+        path.resolve(gameConfig.tileSet.tileFolder, file),
+        "utf8"
+      );
+
+      if (svg.match(/id="tile\d+"/)) {
+        const tileNumber = svg.match(/id="tile(\d+)"/)[1];
+        const [_, spriteWidth, spriteHeight] = svg.match(
+          /viewBox="0 0 (\d+) (\d+)"/
+        );
+
+        if (tallestSprite < spriteHeight) {
+          tallestSprite = spriteHeight;
+        }
+
+        tileWidth = spriteWidth;
+
+        return { svg, tileNumber, spriteWidth, spriteHeight };
+      } else {
+        return "";
+      }
+    })
+    .sort((a, b) => a.tileNumber - b.tileNumber);
+
+  const spriteEmbeds = sprites.map((sprite) => sprite.svg).join("");
+
   const isometricSkew = 1.73;
   const tileBaseHeight = tileWidth / isometricSkew;
-  const highestTileHeight = gameConfig.tileSet.highestTileOriginalHeight;
 
   const tiles = [];
 
@@ -133,11 +163,11 @@ export const generateMapHTML = function (gameConfig, clusters) {
       maxY = blockCoordinates.y;
     }
 
-    const tileNumber = getTileNumber(clusters[i - 1], numberOfTileVariations);
+    const sprite = getSprite(clusters[i - 1], sprites);
     const language = getTileLanguage(clusters[i - 1]);
     languages.set(language, languageStringToCSSClass(language));
 
-    tiles.push({ tileNumber, blockCoordinates, language });
+    tiles.push({ sprite, blockCoordinates, language });
   }
 
   let languageStyles = "";
@@ -162,7 +192,7 @@ export const generateMapHTML = function (gameConfig, clusters) {
   });
 
   let mapWidth = maxX * tileWidth;
-  let mapHeight = maxY * tileBaseHeight + highestTileHeight - tileBaseHeight;
+  let mapHeight = maxY * tileBaseHeight + (tallestSprite - tileBaseHeight);
 
   let lowestIsoY = mapHeight;
 
@@ -172,14 +202,14 @@ export const generateMapHTML = function (gameConfig, clusters) {
       tileWidth / 2 +
       ((tile.blockCoordinates.x - 1 - (tile.blockCoordinates.y - 1)) *
         tileWidth) /
-      2;
+        2;
 
     tile.isoY = Math.round(
       mapHeight -
-      ((tile.blockCoordinates.x - 1 + tile.blockCoordinates.y - 1) *
-        tileBaseHeight) /
-      2 -
-      highestTileHeight
+        ((tile.blockCoordinates.x - 1 + tile.blockCoordinates.y - 1) *
+          tileBaseHeight) /
+          2 -
+        tile.sprite.spriteHeight
     );
 
     if (tile.isoY < lowestIsoY) {
@@ -192,7 +222,7 @@ export const generateMapHTML = function (gameConfig, clusters) {
       : "";
 
     return `
-    <use href="#tile${tile.tileNumber}" 
+    <use href="#tile${tile.sprite.tileNumber}" 
       style="transform: translate(
         ${Math.floor(tile.isoX)}px,
         ${Math.floor(tile.isoY)}px
@@ -201,25 +231,6 @@ export const generateMapHTML = function (gameConfig, clusters) {
     />
     `;
   });
-
-  let sprites = fs
-    .readdirSync(gameConfig.tileSet.tileFolder)
-    .filter((file) => {
-      return file.endsWith(".svg");
-    })
-    .map((file) => {
-      const svg = fs.readFileSync(
-        path.resolve(gameConfig.tileSet.tileFolder, file),
-        "utf8"
-      );
-
-      if (svg.match(/id="tile\d+"/)) {
-        return svg;
-      } else {
-        return "";
-      }
-    })
-    .join("\n");
 
   return `<!doctype html>
 <html>
@@ -327,7 +338,7 @@ export const generateMapHTML = function (gameConfig, clusters) {
       ${tileImages.join("")}
     </svg>
     <div class="tileset">
-    ${sprites}
+    ${spriteEmbeds}
     </div>
   </body>
 </html>
