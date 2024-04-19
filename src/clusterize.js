@@ -16,7 +16,7 @@ async function clusterize(files, number_of_blocks) {
     });
   });
 
-  return await clusters;
+  return clusters.filter((cluster) => Array.isArray(cluster));
 }
 
 export default clusterize;
