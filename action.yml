@@ -32,8 +32,6 @@ runs:
       with:
         repository: "GitTerraGame/Play-GitTerra-Action"
         path: "builders"
-        # TODO REMOVE THIS LINE BEFORE MERGING!!!!!
-        ref: "cache_npm_packages"
 
     - name: Looking for a stash of existing tools
       id: cache-npm
@@ -50,7 +48,7 @@ runs:
           ${{ runner.os }}-
 
     - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
-      name: List the state of node modules
+      name: Check the empty stash
       continue-on-error: true
       shell: "bash"
       run: npm list
