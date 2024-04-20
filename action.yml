@@ -54,7 +54,7 @@ runs:
       run: npm list
 
     - name: Equipping builders with the tools
-      run: (cd builders && npm install)
+      run: (cd builders && npm ci)
       shell: "bash"
 
     - name: Building the city of GitTerra
