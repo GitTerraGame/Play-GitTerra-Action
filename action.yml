@@ -32,7 +32,6 @@ runs:
         mkdir -p wizard
         wget https://github.com/boyter/scc/releases/download/v3.2.0/scc_Linux_x86_64.tar.gz -O wizard/scc.gz
         tar -C wizard/ -xvf wizard/scc.gz
-      # continue-on-error: true
       shell: "bash"
 
     - name: Extracting the inner knowledge hidden inside the scrolls
