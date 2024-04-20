@@ -69,7 +69,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Play GitTerra 🎮
-        uses: GitTerraGame/Play-GitTerra@main
+        uses: GitTerraGame/Play-GitTerra-Action@main
   deploy-gitterra-to-gh-pages:
     needs: play-gitterra
     environment:
