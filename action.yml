@@ -35,6 +35,8 @@ runs:
 
     - name: Looking for a stash of existing tools
       uses: actions/setup-node@v4
+      with:
+        cache-dependency-path: builders/package-lock.json
 
     - name: Equipping builders with the tools
       run: (cd builders && npm install)
