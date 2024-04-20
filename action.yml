@@ -20,11 +20,11 @@ runs:
       id: cache-scc
       uses: actions/cache@v4
       env:
-        cache-name: cache-scc
+        cache-name: our-wizard
       with:
         # we don't expect SCC to change, just use the same version all the time
         path: wizard/
-        key: ${{ runner.os }}-build-${{ env.cache-name }}
+        key: ${{ env.cache-name }}
 
     - if: ${{ steps.cache-scc.outputs.cache-hit != 'true' }}
       name: Inviting a wizard from a distant land
@@ -48,7 +48,7 @@ runs:
       id: cache-npm
       uses: actions/cache@v4
       env:
-        cache-name: cache-node-modules
+        cache-name: tool-stash
       with:
         # npm cache files are stored in `~/.npm` on Linux/macOS
         path: ~/.npm
