@@ -16,7 +16,18 @@ runs:
       with:
         path: "scrolls"
 
-    - name: Inviting the wizard to extract the inner knowledge
+    - name: Asking our wizard to extract the inner knowledge
+      id: cache-scc
+      uses: actions/cache@v4
+      env:
+        cache-name: our-wizard
+      with:
+        # we don't expect SCC to change, just use the same version all the time
+        path: wizard/
+        key: ${{ env.cache-name }}
+
+    - if: ${{ steps.cache-scc.outputs.cache-hit != 'true' }}
+      name: Inviting a wizard from a distant land
       run: |
         mkdir -p wizard
         wget https://github.com/boyter/scc/releases/download/v3.2.0/scc_Linux_x86_64.tar.gz -O wizard/scc.gz
@@ -37,15 +48,14 @@ runs:
       id: cache-npm
       uses: actions/cache@v4
       env:
-        cache-name: cache-node-modules
+        cache-name: tool-stash
       with:
         # npm cache files are stored in `~/.npm` on Linux/macOS
         path: ~/.npm
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('builders/package-lock.json') }}
+        key: ${{ env.cache-name }}-${{ runner.os }}-${{ hashFiles('builders/package-lock.json') }}
         restore-keys: |
-          ${{ runner.os }}-build-${{ env.cache-name }}-
-          ${{ runner.os }}-build-
-          ${{ runner.os }}-
+          ${{ env.cache-name }}-${{ runner.os }}-
+          ${{ env.cache-name }}-
 
     - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
       name: Check the empty stash
