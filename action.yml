@@ -24,9 +24,9 @@ runs:
       with:
         # we don't expect SCC to change, just use the same version all the time
         path: wizard/
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-scc
+        key: ${{ runner.os }}-build-${{ env.cache-name }}
 
-    - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
+    - if: ${{ steps.cache-scc.outputs.cache-hit != 'true' }}
       name: Inviting a wizard from a distant land
       run: |
         mkdir -p wizard
