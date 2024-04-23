@@ -12,7 +12,11 @@ You can see generated map of your city / code in the pipeline's artifacts - depl
 
 See instructions below on how to play Git Terra on your [GitHub](#in-github-repo) or [GitLab](#in-gitlab-repo) repositories.
 
-![A built map](/docs/generated_map.png)
+## Example Maps
+<a href="https://gitterragame.github.io/empty-repo/"><img src="https://gitterra.com/images/background_and_menus/examplemap_1.jpg" alt="Tiny Repo map" height="150"/></a>
+<a href="https://gitterragame.github.io/TestRepo/"><img src="https://gitterra.com/images/background_and_menus/examplemap_2.jpg" alt="Small Repo map" height="150"/></a>
+<a href="https://gitterra.gitlab.io/large-and-old/"><img src="https://gitterra.com/images/background_and_menus/examplemap_3.jpg" alt="Large Repo map" height="150"/></a>
+
 
 ## In GitHub repo
 
