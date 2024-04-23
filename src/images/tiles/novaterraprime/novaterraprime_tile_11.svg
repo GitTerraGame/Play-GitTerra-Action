@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 2013 2711" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
+    <rect id="novaterraprime_tile_11" x="0.335" y="0.416" width="2012.61" height="2709.69" style="fill:none;"/>
+    <clipPath id="_clip1">
+        <rect x="0.335" y="0.416" width="2012.61" height="2709.69"/>
+    </clipPath>
+    <g clip-path="url(#_clip1)">
+        <g id="tile11">
+            <g id="tilebase">
+                <path d="M2006.39,1943.26l0,189.322l-1000.29,577.517l0,-189.322l1000.29,-577.517Z" style="fill:#808184;stroke:#000;stroke-width:12.5px;"/>
+                <path d="M1006.1,2519.83l0,189.799l-999.462,-577.04l-0,-189.799l999.462,577.04Z" style="fill:#a6a8ab;stroke:#000;stroke-width:12.5px;"/>
+                <path d="M1006.93,1365.94l999.711,577.183l-999.711,577.184l-999.711,-577.184l999.711,-577.183Z" style="fill:#d0d2d3;stroke:#000;stroke-width:12.5px;"/>
+            </g>
+            <g transform="matrix(0.866025,0.5,-4.80741e-17,1,-2753.79,10277.3)">
+                <g transform="matrix(155.283,0,0,155.283,4206.83,-9794.12)">
+                </g>
+                <text x="3309.41px" y="-9794.12px" style="font-family:'Arial-BoldMT', 'Arial', sans-serif;font-weight:700;font-size:155.283px;">gitterra.com</text>
+            </g>
+            <g>
+                <path d="M1003.79,1681.38l78.977,45.597l-78.977,45.597l-78.976,-45.597l78.976,-45.597Z" style="fill:#62b54a;stroke:#000;stroke-width:4.17px;"/>
+                <path d="M1003.79,1453.39l39.488,22.799l-39.488,22.798l-39.488,-22.798l39.488,-22.799Z" style="fill:#62b54a;stroke:#000;stroke-width:4.17px;"/>
+                <path d="M1010.67,1722.31c0.073,0.398 0.111,0.807 0.111,1.226c0,3.794 -3.132,6.875 -6.99,6.875c-3.857,-0 -6.989,-3.081 -6.989,-6.875c-0,-0.419 0.038,-0.828 0.11,-1.226l0,-118.861l13.758,0l0,118.861Z" style="fill:#c06100;stroke:#000;stroke-width:4.17px;"/>
+                <path d="M1003.79,1498.99l0,136.791l-39.488,-22.798l0,-136.791l39.488,22.798Z" style="fill:#4e913b;stroke:#000;stroke-width:4.17px;"/>
+                <path d="M1003.79,1498.99l0,136.791l39.488,-22.798l0,-136.791l-39.488,22.798Z" style="fill:#3b6d2c;stroke:#000;stroke-width:4.17px;"/>
+            </g>
+            <path d="M864.068,1691.07l19.523,55.701l-83.832,48.4l-19.523,-55.7l83.832,-48.401Z" style="fill:#994d00;stroke:#000;stroke-width:8.33px;"/>
+            <g>
+                <path d="M716.85,1847.04l78.976,45.597l-78.976,45.597l-78.976,-45.597l78.976,-45.597Z" style="fill:#62b54a;stroke:#000;stroke-width:4.17px;"/>
+                <path d="M716.85,1619.06l39.488,22.799l-39.488,22.798l-39.488,-22.798l39.488,-22.799Z" style="fill:#62b54a;stroke:#000;stroke-width:4.17px;"/>
+                <path d="M723.729,1887.98c0.073,0.398 0.111,0.807 0.111,1.226c-0,3.794 -3.132,6.875 -6.99,6.875c-3.858,-0 -6.99,-3.081 -6.99,-6.875c0,-0.419 0.038,-0.828 0.111,-1.226l0,-118.861l13.758,0l0,118.861Z" style="fill:#c06100;stroke:#000;stroke-width:4.17px;"/>
+                <path d="M716.85,1664.65l0,136.791l-39.488,-22.799l0,-136.79l39.488,22.798Z" style="fill:#4e913b;stroke:#000;stroke-width:4.17px;"/>
+                <path d="M716.85,1664.65l0,136.791l39.488,-22.799l0,-136.79l-39.488,22.798Z" style="fill:#3b6d2c;stroke:#000;stroke-width:4.17px;"/>
+            </g>
+            <rect x="823.432" y="1800.03" width="19.906" height="40.156" style="fill:#603100;stroke:#000;stroke-width:8.33px;"/>
+            <rect x="883.591" y="1765.29" width="19.906" height="40.156" style="fill:#603100;stroke:#000;stroke-width:8.33px;"/>
+            <path d="M883.591,1746.77l41.223,23.8l-82.446,47.6l-41.222,-23.8l82.445,-47.6Z" style="fill:#c06100;stroke:#000;stroke-width:8.33px;"/>
+        </g>
+    </g>
+</svg>
