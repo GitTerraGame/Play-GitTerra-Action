@@ -1,13 +1,12 @@
 import { pathToFileURL } from "url";
 
+import fs from "fs";
+import path from "path";
+import { gitlogPromise } from "gitlog";
+
 import { generateMapHTML } from "./map.js";
 import { defaultGameConfig } from "./gameConfig.js";
 import clusterize from "./clusterize.js";
-import profess from "./story/chatStoryTeller.js";
-import messages from "./story/messages.js";
-
-import fs from "fs";
-import path from "path";
 
 const input = "gitterra.json";
 const output = "index.html";
@@ -87,23 +86,32 @@ const number_of_blocks = Math.round(
 const files = repo.map((elem) => elem.Files).flat();
 const clusters = await clusterize(files, number_of_blocks);
 
+const commits = (
+  await gitlogPromise({
+    repo: "./",
+    number: gameConfig.recentHistoryLength,
+    fields: ["hash", "subject", "authorName", "authorDateRel"],
+    execOptions: { maxBuffer: 1000 * 1024 },
+  })
+).map((commit) => {
+  return {
+    commit: commit.hash,
+    message: commit.subject,
+    author: commit.authorName,
+    date: commit.authorDateRel,
+  };
+});
+
 const stories = gameConfig.storyTeller
   ? await Promise.all(
-      messages.splice(0, 3).map(async (message) => {
+      commits.map(async (commit) => {
         return {
-          message,
-          story: await profess(
-            message,
-            gameConfig.storyTeller.api_key,
-            gameConfig.storyTeller.model_name
-          ),
+          commit,
+          story: await gameConfig.storyTeller.profess(commit),
         };
       })
     )
   : [];
 
-console.log(stories);
-
 const mapHTML = generateMapHTML(gameConfig, clusters, stories);
 fs.writeFileSync(output, mapHTML);
-

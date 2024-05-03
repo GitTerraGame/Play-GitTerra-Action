@@ -326,13 +326,21 @@ export const generateMapHTML = function (gameConfig, clusters, stories) {
     }
 
     main .stories .story {
-      background-color: white;
+      background-color: #FCF5E5;
       padding: 1em;
-      border: 1px solid black;
-      border-radius: 0.3em;
+      border-radius: 0 1em;
+      margin-bottom: 0.5em;
+
+      border-left: 1px solid #ba8e29;
+      border-right: 0.3em solid #ba8e29;
+      border-top: 1px solid #ba8e29;
+      border-bottom: 0.3em solid #ba8e29;
     }
     main .stories .story header {
       font-weight: bold;
+    }
+    main .stories .story p {
+      margin-bottom: 0;
     }
     </style>
     
@@ -353,14 +361,12 @@ export const generateMapHTML = function (gameConfig, clusters, stories) {
     </div>
     <main>
     <div class="stories">
-    <h2>World Story</h2>
+    <h2>Recent News</h2>
     ${stories
       .map(
         (story) => `
         <div class="story">
-        <header>Date: ${new Date(
-          story.message.date
-        ).toLocaleDateString()}</header>
+        <header>${story.commit.date}</header>
         <p>${story.story}</p>
         </div>
       `
@@ -378,7 +384,8 @@ export const generateMapHTML = function (gameConfig, clusters, stories) {
     <div class="tileset">
     ${spriteEmbeds}
     </div>
-  </body>
+
+</body>
 </html>
 `;
 };
