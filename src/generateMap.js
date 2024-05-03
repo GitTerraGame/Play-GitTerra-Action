@@ -27,8 +27,6 @@ if (process.argv.length >= 3 && fs.existsSync(process.argv[2])) {
   }
 }
 
-console.log("[Game Configuration]\n", gameConfig);
-
 const repoStats = {
   total: {
     bytes: 0,
