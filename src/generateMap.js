@@ -93,25 +93,29 @@ const commits = (
     fields: ["hash", "subject", "authorName", "authorDateRel"],
     execOptions: { maxBuffer: 1000 * 1024 },
   })
-).map((commit) => {
-  return {
-    commit: commit.hash,
-    message: commit.subject,
-    author: commit.authorName,
-    date: commit.authorDateRel,
-  };
-});
+)
+  .map((commit) => {
+    return {
+      commit: commit.hash,
+      message: commit.subject,
+      author: commit.authorName,
+      date: commit.authorDateRel,
+    };
+  })
+  .reverse();
 
-const stories = gameConfig.storyTeller
-  ? await Promise.all(
-      commits.map(async (commit) => {
-        return {
-          commit,
-          story: await gameConfig.storyTeller.profess(commit),
-        };
-      })
-    )
-  : [];
+const stories = (
+  gameConfig.storyTeller
+    ? await Promise.all(
+        commits.map(async (commit) => {
+          return {
+            commit,
+            story: await gameConfig.storyTeller.profess(commit),
+          };
+        })
+      )
+    : []
+).reverse();
 
 const mapHTML = generateMapHTML(gameConfig, clusters, stories);
 fs.writeFileSync(output, mapHTML);
