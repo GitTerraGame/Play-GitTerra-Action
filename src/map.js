@@ -105,7 +105,7 @@ function ColorLuminance(hex, lum) {
 // console.log("primary color (ligher)", ColorLuminance("#1c70be", 0.2));
 // console.log("primary color (darker)", ColorLuminance("#1c70be", -0.2));
 
-export const generateMapHTML = function (gameConfig, clusters) {
+export const generateMapHTML = function (gameConfig, clusters, stories) {
   let tileWidth = 0;
   let tallestSprite = 0;
   const sprites = fs
@@ -313,6 +313,27 @@ export const generateMapHTML = function (gameConfig, clusters) {
       fill: var(--primary-color-darker) !important;
     }
 
+    main {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-evenly;
+      width: 100%;
+      gap: 1em;
+    }
+
+    main .stories {
+      width: 20em;
+    }
+
+    main .stories .story {
+      background-color: white;
+      padding: 1em;
+      border: 1px solid black;
+      border-radius: 0.3em;
+    }
+    main .stories .story header {
+      font-weight: bold;
+    }
     </style>
     
   </head>
@@ -330,6 +351,22 @@ export const generateMapHTML = function (gameConfig, clusters) {
         How can we make this game better?
       </a>
     </div>
+    <main>
+    <div class="stories">
+    <h2>World Story</h2>
+    ${stories
+      .map(
+        (story) => `
+        <div class="story">
+        <header>Date: ${new Date(
+          story.message.date
+        ).toLocaleDateString()}</header>
+        <p>${story.story}</p>
+        </div>
+      `
+      )
+      .join("")}
+    </div>
     <svg class="map" viewBox="0 ${lowestIsoY} ${Math.ceil(
     mapWidth
   )} ${Math.ceil(
@@ -337,6 +374,7 @@ export const generateMapHTML = function (gameConfig, clusters) {
   )}" style="fill-rule:evenodd; clip-rule:evenodd; stroke-linecap:round; stroke-linejoin:round; stroke-miterlimit:1.5;">
       ${tileImages.join("")}
     </svg>
+    </main>
     <div class="tileset">
     ${spriteEmbeds}
     </div>
