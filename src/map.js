@@ -361,7 +361,7 @@ export const generateMapHTML = function (gameConfig, clusters, stories) {
     </div>
     <main>
     <div class="stories">
-    <h2>Recent News</h2>
+    <h2>Recent Events</h2>
     ${stories
       .map(
         (story) => `
