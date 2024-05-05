@@ -133,9 +133,11 @@ export const generateMapHTML = function (gameConfig, clusters) {
 
         return { svg, tileNumber, spriteWidth, spriteHeight };
       } else {
-        return "";
+        console.error(file, "is not a valid sprite");
+        return false; // invalid sprite
       }
     })
+    .filter((x) => x) // remove invalid sprites
     .sort((a, b) => a.tileNumber - b.tileNumber);
 
   const spriteEmbeds = sprites.map((sprite) => sprite.svg).join("");
