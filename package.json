@@ -6,6 +6,9 @@
   "scripts": {
     "test": "cd test && node ../src/generateMap.js .gitterra.config.js && open-cli index.html"
   },
+  "engines": {
+    "node": ">=18"
+  },
   "keywords": [
     "game",
     "git",
@@ -20,6 +23,8 @@
     "open-cli": "^8.0.0"
   },
   "dependencies": {
+    "@google/generative-ai": "^0.8.0",
+    "gitlog": "^4.0.8",
     "kmeansjs": "^0.0.3"
   }
 }

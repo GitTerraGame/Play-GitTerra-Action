@@ -1,11 +1,12 @@
 import { pathToFileURL } from "url";
 
+import fs from "fs";
+import path from "path";
+import { gitlogPromise } from "gitlog";
+
 import { generateMapHTML } from "./map.js";
 import { defaultGameConfig } from "./gameConfig.js";
 import clusterize from "./clusterize.js";
-
-import fs from "fs";
-import path from "path";
 
 const input = "gitterra.json";
 const output = "index.html";
@@ -25,8 +26,6 @@ if (process.argv.length >= 3 && fs.existsSync(process.argv[2])) {
     console.error("Error while reading custom configuration file: ", e);
   }
 }
-
-console.log("[Game Configuration]\n", gameConfig);
 
 const repoStats = {
   total: {
@@ -85,5 +84,36 @@ const number_of_blocks = Math.round(
 const files = repo.map((elem) => elem.Files).flat();
 const clusters = await clusterize(files, number_of_blocks);
 
-const mapHTML = generateMapHTML(gameConfig, clusters);
+const commits = (
+  await gitlogPromise({
+    repo: "./",
+    number: gameConfig.recentHistoryLength,
+    fields: ["hash", "subject", "authorName", "authorDateRel"],
+    execOptions: { maxBuffer: 1000 * 1024 },
+  })
+)
+  .map((commit) => {
+    return {
+      commit: commit.hash,
+      message: commit.subject,
+      author: commit.authorName,
+      date: commit.authorDateRel,
+    };
+  })
+  .reverse();
+
+const stories = (
+  gameConfig.storyTeller
+    ? await Promise.all(
+        commits.map(async (commit) => {
+          return {
+            commit,
+            story: await gameConfig.storyTeller.profess(commit),
+          };
+        })
+      )
+    : []
+).reverse();
+
+const mapHTML = generateMapHTML(gameConfig, clusters, stories);
 fs.writeFileSync(output, mapHTML);

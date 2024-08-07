@@ -105,7 +105,7 @@ function ColorLuminance(hex, lum) {
 // console.log("primary color (ligher)", ColorLuminance("#1c70be", 0.2));
 // console.log("primary color (darker)", ColorLuminance("#1c70be", -0.2));
 
-export const generateMapHTML = function (gameConfig, clusters) {
+export const generateMapHTML = function (gameConfig, clusters, stories) {
   let tileWidth = 0;
   let tallestSprite = 0;
   const sprites = fs
@@ -234,6 +234,22 @@ export const generateMapHTML = function (gameConfig, clusters) {
     `;
   });
 
+  const recentEvents = stories.length
+    ? `<div class="stories">
+    <h2>Recent Events</h2>
+    ${stories
+      .map(
+        (story) => `
+        <div class="story">
+        <header>${story.commit.date}</header>
+        <p>${story.story}</p>
+        </div>
+      `
+      )
+      .join("")}
+    </div>`
+    : "";
+
   return `<!doctype html>
 <html>
   <head>
@@ -315,6 +331,35 @@ export const generateMapHTML = function (gameConfig, clusters) {
       fill: var(--primary-color-darker) !important;
     }
 
+    main {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-evenly;
+      width: 100%;
+      gap: 2em;
+    }
+
+    main .stories {
+      width: 20em;
+    }
+
+    main .stories .story {
+      background-color: #FCF5E5;
+      padding: 1em;
+      border-radius: 0 1em;
+      margin-bottom: 0.5em;
+
+      border-left: 1px solid #ba8e29;
+      border-right: 0.3em solid #ba8e29;
+      border-top: 1px solid #ba8e29;
+      border-bottom: 0.3em solid #ba8e29;
+    }
+    main .stories .story header {
+      font-weight: bold;
+    }
+    main .stories .story p {
+      margin-bottom: 0;
+    }
     </style>
     
   </head>
@@ -332,6 +377,8 @@ export const generateMapHTML = function (gameConfig, clusters) {
         How can we make this game better?
       </a>
     </div>
+    <main>
+    ${recentEvents}
     <svg class="map" viewBox="0 ${lowestIsoY} ${Math.ceil(
     mapWidth
   )} ${Math.ceil(
@@ -339,10 +386,12 @@ export const generateMapHTML = function (gameConfig, clusters) {
   )}" style="fill-rule:evenodd; clip-rule:evenodd; stroke-linecap:round; stroke-linejoin:round; stroke-miterlimit:1.5;">
       ${tileImages.join("")}
     </svg>
+    </main>
     <div class="tileset">
     ${spriteEmbeds}
     </div>
-  </body>
+
+</body>
 </html>
 `;
 };
