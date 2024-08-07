@@ -13,10 +13,10 @@ You can see generated map of your city / code in the pipeline's artifacts - depl
 See instructions below on how to play Git Terra on your [GitHub](#in-github-repo) or [GitLab](#in-gitlab-repo) repositories.
 
 ## Example Maps
+
 <a href="https://gitterragame.github.io/empty-repo/"><img src="https://gitterra.com/images/background_and_menus/examplemap_1.jpg" alt="Tiny Repo map" height="150"/></a>
 <a href="https://gitterragame.github.io/TestRepo/"><img src="https://gitterra.com/images/background_and_menus/examplemap_2.jpg" alt="Small Repo map" height="150"/></a>
 <a href="https://gitterra.gitlab.io/large-and-old/"><img src="https://gitterra.com/images/background_and_menus/examplemap_3.jpg" alt="Large Repo map" height="150"/></a>
-
 
 ## In GitHub repo
 
@@ -191,3 +191,12 @@ GitTerra is an open source project by Sergey and Alexander Chernyshev of Chernys
 We also use [SCC](https://github.com/boyter/scc), a code analysis software by Ben Boyter to help us get data about your code to build the map. SCC is licensed under the [MIT License](LICENSE.scc.md).
 
 We also use language color info from GitHub [linguist](https://github.com/github-linguist/linguist) project, which is licensed under the [MIT License](LICENSE.linguist.md).
+
+## Maintenance
+
+### Publishing a new version
+
+- Update the version in `package.json`
+- Create a tag with the new version, e.g. 'v1.2.3'
+- Push the tag to both GitHub and GitLab repositories by running a command like `git push all v1.2.3` (if you have a remote named `all` that points to both GitHub and GitLab repositories) or `git push github v1.2.3 && git push gitlab v1.2.3` if you have separate remotes for GitHub and GitLab
+- Manually [create a new release on GitHub](https://github.com/GitTerraGame/Play-GitTerra-Action/releases) with the same tag name and add release notes. No additional steps needed for GitLab as it will automatically create a release based on the tag
