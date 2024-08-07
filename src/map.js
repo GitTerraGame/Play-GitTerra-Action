@@ -232,6 +232,22 @@ export const generateMapHTML = function (gameConfig, clusters, stories) {
     `;
   });
 
+  const recentEvents = stories.length
+    ? `<div class="stories">
+    <h2>Recent Events</h2>
+    ${stories
+      .map(
+        (story) => `
+        <div class="story">
+        <header>${story.commit.date}</header>
+        <p>${story.story}</p>
+        </div>
+      `
+      )
+      .join("")}
+    </div>`
+    : "";
+
   return `<!doctype html>
 <html>
   <head>
@@ -360,19 +376,7 @@ export const generateMapHTML = function (gameConfig, clusters, stories) {
       </a>
     </div>
     <main>
-    <div class="stories">
-    <h2>Recent Events</h2>
-    ${stories
-      .map(
-        (story) => `
-        <div class="story">
-        <header>${story.commit.date}</header>
-        <p>${story.story}</p>
-        </div>
-      `
-      )
-      .join("")}
-    </div>
+    ${recentEvents}
     <svg class="map" viewBox="0 ${lowestIsoY} ${Math.ceil(
     mapWidth
   )} ${Math.ceil(
