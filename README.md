@@ -97,6 +97,56 @@ jobs:
 
 Keep in mind that you have to go to the repository settings and pick `GitHub Actions` as a source in "Build and Deployment" section of GitHub Pages settings for your repo. We didn't want to automate that configuration for you, to make sure you don't replace your production website with this.
 
+### Deploy the map to Netlify
+
+It sometimes easier to deploy the map to Netlify, especially if you are deploying from a private repo (GitHub Pages doesn't support private repositories unless you are on Enterprise plan).
+
+To do this, you can use [Netlify Deploy](https://github.com/marketplace/actions/netlify-deploy) GitHub Action.
+
+You will need to [create a new site in Netlify](https://app.netlify.com/drop) (just drop a folder with an empty `index.html` file or use a sample template to start) and get the Site ID (you can see one in site settings) and an Personal Access Token ([generate your token here](https://app.netlify.com/user/applications#personal-access-tokens)).
+Then you need to add those to your repository secrets as `NETLIFY_SITE_ID` and `NETLIFY_AUTH_TOKEN` respectively.
+
+Then use this workflow in your `.github/workflows/gitterra.yml` file:
+
+```yaml
+name: Play GitTerra
+run-name: Playing 🌎 GitTerra on ${{ github.repository }} 🗺️
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  play-gitterra:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Play GitTerra 🎮
+        uses: GitTerraGame/Play-GitTerra-Action@main
+  deploy-gitterra-to-netlify:
+    needs: play-gitterra
+    runs-on: ubuntu-latest
+    name: "Deploy GItTerra map to Netlify"
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: gitterra
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "."
+      - name: "Deploy to Netlify"
+        uses: jsmrcaga/action-netlify-deploy@v2.0.0
+        with:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          build_directory: "."
+          NETLIFY_DEPLOY_TO_PROD: true
+          NETLIFY_DEPLOY_MESSAGE: "Uploading updated GitTerra map for ${{ github.sha }}"
+          install_command: "echo Skipping installing the dependencies"
+          build_command: "echo Skipping building the web files"
+```
+
 ### Add a badge to you README
 
 To add a clickable badge at the top of your repo README file, use the following markdown code:
