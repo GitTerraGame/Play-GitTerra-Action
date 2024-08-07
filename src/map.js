@@ -318,7 +318,7 @@ export const generateMapHTML = function (gameConfig, clusters, stories) {
       flex-direction: row;
       justify-content: space-evenly;
       width: 100%;
-      gap: 1em;
+      gap: 2em;
     }
 
     main .stories {
