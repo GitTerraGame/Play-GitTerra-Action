@@ -101,8 +101,6 @@ Keep in mind that you have to go to the repository settings and pick `GitHub Act
 
 It sometimes easier to deploy the map to Netlify, especially if you are deploying from a private repo (GitHub Pages doesn't support private repositories unless you are on Enterprise plan).
 
-To do this, you can use [Netlify Deploy](https://github.com/marketplace/actions/netlify-deploy) GitHub Action.
-
 You will need to [create a new site in Netlify](https://app.netlify.com/drop) (just drop a folder with an empty `index.html` file or use a sample template to start) and get the Site ID (you can see one in site settings) and an Personal Access Token ([generate your token here](https://app.netlify.com/user/applications#personal-access-tokens)).
 Then you need to add those to your repository secrets as `NETLIFY_SITE_ID` and `NETLIFY_AUTH_TOKEN` respectively.
 
