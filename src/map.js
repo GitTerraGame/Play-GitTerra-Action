@@ -224,13 +224,15 @@ export const generateMapHTML = function (gameConfig, clusters) {
       : "";
 
     return `
-    <use href="#tile${tile.sprite.tileNumber}" 
+    <use href="#tile${tile.sprite.tileNumber}"
       style="transform: translate(
         ${Math.floor(tile.isoX)}px,
         ${Math.floor(tile.isoY)}px
       )"
       ${languageClassAttribute}
-    />
+    >
+      <title>${tile.language}</title>
+    </use>
     `;
   });
 
