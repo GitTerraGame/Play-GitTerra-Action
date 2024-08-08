@@ -74,7 +74,7 @@ runs:
       shell: "bash"
 
     - name: Generating historical records
-      run: node builders/src/generate_history.sh ./history
+      run: builders/src/generate_history.sh ./history
       shell: "bash"
 
     - name: Archive the maps in the player's library
