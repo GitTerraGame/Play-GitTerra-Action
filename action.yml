@@ -16,6 +16,7 @@ runs:
       with:
         path: "scrolls"
         fetch-depth: 0
+        ref: ${{ github.ref }}
 
     - name: Asking our wizard to extract the inner knowledge
       id: cache-scc
