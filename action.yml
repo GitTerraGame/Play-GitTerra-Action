@@ -74,7 +74,7 @@ runs:
       shell: "bash"
 
     - name: Generating historical records
-      run: builders/src/generate_history.sh ./history
+      run: builders/src/generate_history.sh ./scrolls ./history
       shell: "bash"
 
     - name: Archive the maps in the player's library
