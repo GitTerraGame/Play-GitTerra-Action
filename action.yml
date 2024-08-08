@@ -71,6 +71,10 @@ runs:
       run: node builders/src/generateMap.js scrolls/.gitterra.config.js
       shell: "bash"
 
+    - name: Generating historical records
+      run: node builders/src/generate_history.sh ./history
+      shell: "bash"
+
     - name: Archive the maps in the player's library
       uses: actions/upload-artifact@v4
       with:
