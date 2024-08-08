@@ -15,6 +15,7 @@ runs:
       uses: actions/checkout@v4
       with:
         path: "scrolls"
+        fetch-depth: 0
 
     - name: Asking our wizard to extract the inner knowledge
       id: cache-scc
