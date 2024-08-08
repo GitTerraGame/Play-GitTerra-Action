@@ -86,8 +86,8 @@ runs:
         path: history/
         key: ${{ env.cache-name }}
 
-    - name: Delete today's history
-      run: echo deleting ./history/$(cd scrolls; git log -n1 --pretty=format:"%ad" --date=short).json; rm -f ./history/$(cd scrolls; git log -n1 --pretty=format:"%ad" --date=short).json
+    - name: Rewriting today's history
+      run: rm -f ./history/$(cd scrolls; git log -n1 --pretty=format:"%ad" --date=short).json
       shell: "bash"
 
     - name: Generating historical records
