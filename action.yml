@@ -84,7 +84,7 @@ runs:
       with:
         # we only expect history to change when the repository changes and only going forward
         path: history/
-        key: ${{ env.cache-name }}
+        key: ${{ env.cache-name }}-${{ github.ref }}
 
     - name: Rewriting today's history
       run: rm -f ./history/$(cd scrolls; git log -n1 --pretty=format:"%ad" --date=short).json
