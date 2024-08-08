@@ -75,6 +75,7 @@ jobs:
       - name: Play GitTerra 🎮
         uses: GitTerraGame/Play-GitTerra-Action@main
   deploy-gitterra-to-gh-pages:
+    if: github.ref == 'refs/heads/main'
     needs: play-gitterra
     environment:
       name: github-pages
@@ -122,6 +123,7 @@ jobs:
       - name: Play GitTerra 🎮
         uses: GitTerraGame/Play-GitTerra-Action@main
   deploy-gitterra-to-netlify:
+    if: github.ref == 'refs/heads/main'
     needs: play-gitterra
     runs-on: ubuntu-latest
     name: "Deploy GItTerra map to Netlify"
