@@ -57,12 +57,7 @@ function getSprite(cluster, sprites) {
   let spriteIndex = 0;
 
   try {
-    const totalLinesInCluster = cluster.reduce(
-      (acc, [file]) => acc + file.Lines,
-      0
-    );
-
-    spriteIndex = totalLinesInCluster % sprites.length;
+    spriteIndex = cluster.totalLinesInCluster % sprites.length;
   } catch (error) {
     spriteIndex = Math.floor(Math.random() * sprites.length);
   }
@@ -71,13 +66,8 @@ function getSprite(cluster, sprites) {
 }
 
 function getTileLanguage(cluster) {
-  const languageStats = cluster.reduce((acc, [file]) => {
-    acc[file.Language] = acc[file.Language] + file.Lines || file.Lines;
-    return acc;
-  }, {});
-
-  return Object.keys(languageStats).reduce((a, b) => {
-    return languageStats[a] > languageStats[b] ? a : b;
+  return Object.keys(cluster.languageStats).reduce((a, b) => {
+    return cluster.languageStats[a] > cluster.languageStats[b] ? a : b;
   }, 0);
 }
 
