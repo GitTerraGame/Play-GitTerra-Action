@@ -1,110 +1,125 @@
-import { pathToFileURL } from "url";
-
-import { generateMapHTML } from "./map.js";
-import { defaultGameConfig } from "./gameConfig.js";
-import clusterize from "./clusterize.js";
-
+// node native modules
 import fs from "fs";
-import path from "path";
+import { spawnSync } from "node:child_process";
 
-const input = "gitterra.json";
-const output = "index.html";
+// custom modules
+import simpleGit from "simple-git";
 
-let gameConfig = defaultGameConfig;
+// our own modules
+import { generateMapHTML } from "./map.js";
+import { getGameConfig } from "./gameConfig.js";
 
-if (process.argv.length >= 3 && fs.existsSync(process.argv[2])) {
-  const fullPath = path.resolve(".", process.argv[2]);
+import getClusters from "./getClusters.js";
 
-  console.log("Found custom configuration file: ", fullPath);
+// Constants
+const SCC = "/usr/local/bin/scc";
+const mapOutput = "index.html";
+const NUMBER_OF_COMMITS_TO_PROCESS_IN_ONE_GO = 5;
 
-  try {
-    const configuratorModule = await import(pathToFileURL(fullPath));
-
-    gameConfig = configuratorModule.default(gameConfig);
-  } catch (e) {
-    console.error("Error while reading custom configuration file: ", e);
-  }
+let folder = "./";
+if (process.argv.length >= 3) {
+  folder = process.argv[2];
 }
+
+let gameConfig = await getGameConfig(`${folder}/.gitterra.config.js`);
 
 console.log("[Game Configuration]\n", gameConfig);
 
-async function getClusters(repo) {
-  const repoStats = {
-    total: {
-      bytes: 0,
-      files: 0,
-      lines: 0,
-      codebytes: 0,
-      code: 0,
-      comment: 0,
-      blanks: 0,
-      complexity: 0,
-      wComplexity: 0,
-    },
-    weight: {
-      files: 400,
-      lines: 100000,
-      comment: 15000,
-      code: 80000,
-      bytes: 4000000,
-    },
-  };
+async function processRepo() {
+  const SCCResult = spawnSync(SCC, [folder, "--by-file", "--format=json"]);
 
-  repo.forEach((elem) => {
-    repoStats.total.bytes += elem.Bytes;
-    repoStats.total.files += elem.Count;
-    repoStats.total.lines += elem.Lines;
-    repoStats.total.codebytes = +elem.CodeBytes;
-    repoStats.total.code += elem.Code;
-    repoStats.total.comment += elem.Comment;
-    repoStats.total.blanks += elem.Blank;
-    repoStats.total.complexity += elem.Complexity;
-    repoStats.total.wComplexity += elem.WeightedComplexity;
-  });
+  // Check if the process completed successfully
+  if (SCCResult.error) {
+    console.error("Failed to start subprocess:", SCCResult.error);
+    exit(1);
+  }
 
-  const number_of_blocks = Math.round(
-    (100 *
-      Math.log10(
-        repoStats.total.files / repoStats.weight.files +
-          repoStats.total.lines / repoStats.weight.lines +
-          repoStats.total.comment / repoStats.weight.comment +
-          repoStats.total.code / repoStats.weight.code +
-          repoStats.total.bytes / repoStats.weight.bytes +
-          1
-      )) /
-      3 +
-      gameConfig.minTiles
-  );
+  // Check the exit code to see if it was successful
+  if (SCCResult.status !== 0) {
+    console.log(`Child process exited with code ${SCCResult.status}`);
+    console.error("Error output:");
+    console.error(SCCResult.stderr.toString());
+    exit(1);
+  }
 
-  /**
-   * Deterministicly group files into clusters for each city block
-   */
-  const files = repo.map((elem) => elem.Files).flat();
-  const clusters = await clusterize(files, number_of_blocks);
+  const repo = JSON.parse(SCCResult.stdout.toString());
 
+  // Generate the map for last commit in the repository
+  const clusters = await getClusters(repo, gameConfig);
   return clusters;
 }
 
-/*
- * Calculating global statistics to determine the number of city blocks
- */
-const clusters = await getClusters(JSON.parse(fs.readFileSync(input, "utf8")));
+async function getHistory() {
+  // Initialize simple-git
+  const git = simpleGit(folder);
 
-const clusterSummaries = clusters.map((cluster) => {
-  const summary = {};
+  // @TODO - cache the commits and only fetch the new ones
+  const history = new Map();
 
-  summary.totalLinesInCluster = cluster.reduce(
-    (acc, [file]) => acc + file.Lines,
-    0
-  );
+  // wrapping the code in a try-catch block to handle git errors
+  try {
+    // Get the current branch
+    const branch = (await git.branch()).current;
 
-  summary.languageStats = cluster.reduce((acc, [file]) => {
-    acc[file.Language] = acc[file.Language] + file.Lines || file.Lines;
-    return acc;
-  }, {});
+    console.log("Current branch:", branch);
 
-  return summary;
-});
+    // log in reverse order (latest commit first)
+    const log = await git.log();
 
-const mapHTML = generateMapHTML(gameConfig, clusterSummaries);
-fs.writeFileSync(output, mapHTML);
+    console.log("Total commits", log.total);
+
+    // Get latest commit per day
+    // Note: in JavaScript Maps preserve order of insertion so we can rely on it being in the reverse chronological order
+    const commitsToDisplay = log.all.reduce((acc, commit) => {
+      const date = new Date(commit.date);
+      const day = date.toDateString();
+      acc.set(day, commit);
+      return acc;
+    }, new Map());
+
+    console.log("Commit days", commitsToDisplay);
+
+    const commitIterator = commitsToDisplay.entries();
+
+    // add latest commit without checkout it out
+    const [day, commit] = commitIterator.next().value;
+    history.set(day, {
+      commit,
+      clusters: await processRepo(),
+    });
+
+    console.log("Latest commit:", day, commit.hash);
+
+    for (let i = 1; i < NUMBER_OF_COMMITS_TO_PROCESS_IN_ONE_GO; i++) {
+      const entry = commitIterator.next();
+      if (entry.done) {
+        break;
+      }
+
+      const day = entry.value[0];
+      const commit = entry.value[1];
+
+      console.log("Checkout commit for the day:", day, commit.hash);
+
+      await git.checkout(commit.hash);
+      const clusters = await processRepo();
+
+      history.set(day, {
+        commit,
+        clusters,
+      });
+    }
+
+    console.log("Checkout latest commit on the branch:", branch);
+    await git.checkout(branch);
+  } catch (error) {
+    console.error("Error retrieving branch name:", error);
+  }
+
+  // @TODO - save the cache back to the file system so it can be saved and re-used
+
+  return history;
+}
+
+const mapHTML = generateMapHTML(gameConfig, await getHistory());
+fs.writeFileSync(mapOutput, mapHTML);

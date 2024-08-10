@@ -95,9 +95,10 @@ function ColorLuminance(hex, lum) {
 // console.log("primary color (ligher)", ColorLuminance("#1c70be", 0.2));
 // console.log("primary color (darker)", ColorLuminance("#1c70be", -0.2));
 
-export const generateMapHTML = function (gameConfig, clusters) {
-  let tileWidth = 0;
+export const generateSprites = function (gameConfig) {
   let tallestSprite = 0;
+  let tileWidth = 0;
+
   const sprites = fs
     .readdirSync(gameConfig.tileSet.tileFolder)
     .filter((file) => {
@@ -130,11 +131,23 @@ export const generateMapHTML = function (gameConfig, clusters) {
     .filter((x) => x) // remove invalid sprites
     .sort((a, b) => a.tileNumber - b.tileNumber);
 
-  const spriteEmbeds = sprites.map((sprite) => sprite.svg).join("");
+  return {
+    sprites,
+    tallestSprite,
+    tileWidth,
+    spriteEmbeds: sprites.map((sprite) => sprite.svg).join(""),
+  };
+};
 
-  const isometricSkew = 1.73;
-  const tileBaseHeight = tileWidth / isometricSkew;
-
+export const generateOneMapHTML = function (
+  sprites,
+  tileWidth,
+  tileBaseHeight,
+  tallestSprite,
+  clusters,
+  dateId,
+  hidden
+) {
   const tiles = [];
 
   // mimimum map size (e.g. don't scale tiles too large for smaller maps)
@@ -226,6 +239,38 @@ export const generateMapHTML = function (gameConfig, clusters) {
     `;
   });
 
+  const mapSVG = `<svg class="map${
+    hidden ? " hidden" : ""
+  }" id="date_${dateId}" viewBox="0 ${lowestIsoY} ${Math.ceil(
+    mapWidth
+  )} ${Math.ceil(
+    mapHeight - lowestIsoY
+  )}" style="fill-rule:evenodd; clip-rule:evenodd; stroke-linecap:round; stroke-linejoin:round; stroke-miterlimit:1.5;">
+      ${tileImages.join("")}
+    </svg>`;
+
+  return { languageStyles, mapSVG };
+};
+
+export const generateMapHTML = function (gameConfig, history) {
+  const clusters = history.entries().next().value[1].clusters;
+
+  const { sprites, tileWidth, tallestSprite, spriteEmbeds } =
+    generateSprites(gameConfig);
+
+  const isometricSkew = 1.73;
+  const tileBaseHeight = tileWidth / isometricSkew;
+
+  const { languageStyles, mapSVG } = generateOneMapHTML(
+    sprites,
+    tileWidth,
+    tileBaseHeight,
+    tallestSprite,
+    clusters,
+    "today",
+    false
+  );
+
   return `<!doctype html>
 <html>
   <head>
@@ -307,6 +352,9 @@ export const generateMapHTML = function (gameConfig, clusters) {
       fill: var(--primary-color-darker) !important;
     }
 
+    svg.map.hidden {
+      display: none;
+    }
     </style>
     
   </head>
@@ -324,13 +372,7 @@ export const generateMapHTML = function (gameConfig, clusters) {
         How can we make this game better?
       </a>
     </div>
-    <svg class="map" viewBox="0 ${lowestIsoY} ${Math.ceil(
-    mapWidth
-  )} ${Math.ceil(
-    mapHeight - lowestIsoY
-  )}" style="fill-rule:evenodd; clip-rule:evenodd; stroke-linecap:round; stroke-linejoin:round; stroke-miterlimit:1.5;">
-      ${tileImages.join("")}
-    </svg>
+    ${mapSVG}
     <div class="tileset">
     ${spriteEmbeds}
     </div>
