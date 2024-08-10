@@ -139,41 +139,17 @@ export const generateSprites = function (gameConfig) {
   };
 };
 
-export const generateOneMapHTML = function (
-  sprites,
-  tileWidth,
-  tileBaseHeight,
-  tallestSprite,
-  clusters,
-  dateId,
-  hidden
-) {
-  const tiles = [];
-
-  // mimimum map size (e.g. don't scale tiles too large for smaller maps)
-  let maxX = 4;
-  let maxY = 2;
-
+export const getHistoricalLanguages = function (history) {
   const languages = new Map();
 
-  // I count from last to first so first tiles get painted on top of the last tile in the final image.
-  for (let i = clusters.length; i >= 1; i--) {
-    const blockCoordinates = getMapTileCoordinates(i);
+  history.forEach(({ clusters }) => {
+    clusters.forEach((cluster) => {
+      console.log("cluster", cluster);
 
-    if (maxX < blockCoordinates.x) {
-      maxX = blockCoordinates.x;
-    }
-
-    if (maxY < blockCoordinates.y) {
-      maxY = blockCoordinates.y;
-    }
-
-    const sprite = getSprite(clusters[i - 1], sprites);
-    const language = getTileLanguage(clusters[i - 1]);
-    languages.set(language, languageStringToCSSClass(language));
-
-    tiles.push({ sprite, blockCoordinates, language });
-  }
+      const language = getTileLanguage(cluster);
+      languages.set(language, languageStringToCSSClass(language));
+    });
+  });
 
   let languageStyles = "";
   languages.forEach((languageClass, language) => {
@@ -195,6 +171,42 @@ export const generateOneMapHTML = function (
     }
     `;
   });
+
+  return { languages, languageStyles };
+};
+
+export const generateMapSVG = function (
+  languages,
+  sprites,
+  tileWidth,
+  tileBaseHeight,
+  tallestSprite,
+  clusters,
+  dateString,
+  hidden
+) {
+  const tiles = [];
+
+  // mimimum map size (e.g. don't scale tiles too large for smaller maps)
+  let maxX = 4;
+  let maxY = 2;
+
+  // I count from last to first so first tiles get painted on top of the last tile in the final image.
+  for (let i = clusters.length; i >= 1; i--) {
+    const blockCoordinates = getMapTileCoordinates(i);
+
+    if (maxX < blockCoordinates.x) {
+      maxX = blockCoordinates.x;
+    }
+
+    if (maxY < blockCoordinates.y) {
+      maxY = blockCoordinates.y;
+    }
+
+    const sprite = getSprite(clusters[i - 1], sprites);
+    const language = getTileLanguage(clusters[i - 1]);
+    tiles.push({ sprite, blockCoordinates, language });
+  }
 
   let mapWidth = maxX * tileWidth;
   let mapHeight = maxY * tileBaseHeight + (tallestSprite - tileBaseHeight);
@@ -239,17 +251,18 @@ export const generateOneMapHTML = function (
     `;
   });
 
-  const mapSVG = `<svg class="map${
+  const dateId = dateString.replace(/[^A-Za-z0-9]/g, "-");
+
+  return `<svg class="map${
     hidden ? " hidden" : ""
   }" id="date_${dateId}" viewBox="0 ${lowestIsoY} ${Math.ceil(
     mapWidth
   )} ${Math.ceil(
     mapHeight - lowestIsoY
   )}" style="fill-rule:evenodd; clip-rule:evenodd; stroke-linecap:round; stroke-linejoin:round; stroke-miterlimit:1.5;">
+      <title>${dateString}</title>
       ${tileImages.join("")}
     </svg>`;
-
-  return { languageStyles, mapSVG };
 };
 
 export const generateMapHTML = function (gameConfig, history) {
@@ -261,16 +274,29 @@ export const generateMapHTML = function (gameConfig, history) {
   const isometricSkew = 1.73;
   const tileBaseHeight = tileWidth / isometricSkew;
 
-  const { languageStyles, mapSVG } = generateOneMapHTML(
-    sprites,
-    tileWidth,
-    tileBaseHeight,
-    tallestSprite,
-    clusters,
-    "today",
-    false
-  );
+  const { languages, languageStyles } = getHistoricalLanguages(history);
 
+  let mapSVGs = "";
+  let hidden = false;
+  history.forEach(({ clusters }, day) => {
+    mapSVGs +=
+      "\n" +
+      generateMapSVG(
+        languages,
+        sprites,
+        tileWidth,
+        tileBaseHeight,
+        tallestSprite,
+        clusters,
+        day,
+        hidden
+      );
+
+    // don't hide the first map
+    if (!hidden) {
+      hidden = true;
+    }
+  });
   return `<!doctype html>
 <html>
   <head>
@@ -372,7 +398,7 @@ export const generateMapHTML = function (gameConfig, history) {
         How can we make this game better?
       </a>
     </div>
-    ${mapSVG}
+    ${mapSVGs}
     <div class="tileset">
     ${spriteEmbeds}
     </div>
