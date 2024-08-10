@@ -144,8 +144,6 @@ export const getHistoricalLanguages = function (history) {
 
   history.forEach(({ clusters }) => {
     clusters.forEach((cluster) => {
-      console.log("cluster", cluster);
-
       const language = getTileLanguage(cluster);
       languages.set(language, languageStringToCSSClass(language));
     });

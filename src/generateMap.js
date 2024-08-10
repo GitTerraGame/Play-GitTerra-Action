@@ -14,7 +14,8 @@ import getClusters from "./getClusters.js";
 // Constants
 const SCC = "/usr/local/bin/scc";
 const mapOutput = "index.html";
-const NUMBER_OF_COMMITS_TO_PROCESS_IN_ONE_GO = 100;
+const historyRecord = "history.json";
+const NUMBER_OF_COMMITS_TO_PROCESS_IN_ONE_GO = 5;
 
 let folder = "./";
 if (process.argv.length >= 3) {
@@ -53,8 +54,9 @@ async function getHistory() {
   // Initialize simple-git
   const git = simpleGit(folder);
 
-  // @TODO - cache the commits and only fetch the new ones
-  const history = new Map();
+  const history = fs.existsSync(historyRecord)
+    ? new Map(JSON.parse(fs.readFileSync(historyRecord)))
+    : new Map();
 
   // wrapping the code in a try-catch block to handle git errors
   try {
@@ -73,7 +75,8 @@ async function getHistory() {
     const commitsToDisplay = log.all.reduce((acc, commit) => {
       const date = new Date(commit.date);
       const day = date.toDateString();
-      acc.set(day, commit);
+
+      acc.set(day, commit.hash);
       return acc;
     }, new Map());
 
@@ -82,44 +85,62 @@ async function getHistory() {
     const commitIterator = commitsToDisplay.entries();
 
     // add latest commit without checkout it out
-    const [day, commit] = commitIterator.next().value;
+    const [day, commitHash] = commitIterator.next().value;
     history.set(day, {
-      commit,
+      commitHash,
       clusters: await processRepo(),
     });
 
-    console.log("Latest commit:", day, commit.hash);
+    console.log("Latest commit:", day, commitHash);
+
+    let totalCheckouts = 0;
 
     for (let i = 1; i < NUMBER_OF_COMMITS_TO_PROCESS_IN_ONE_GO; i++) {
-      const entry = commitIterator.next();
+      let entry = commitIterator.next();
+      if (entry.done) {
+        break;
+      }
+
+      // skip if already processed
+      while (history.has(entry.value[0])) {
+        entry = commitIterator.next();
+
+        if (entry.done) {
+          break;
+        }
+      }
+
       if (entry.done) {
         break;
       }
 
       const day = entry.value[0];
-      const commit = entry.value[1];
+      const commitHash = entry.value[1];
 
-      console.log("Checkout commit for the day:", day, commit.hash);
+      console.log("Checkout commit for the day:", day, commitHash);
 
-      await git.checkout(commit.hash);
+      await git.checkout(commitHash);
+      totalCheckouts++;
       const clusters = await processRepo();
 
       history.set(day, {
-        commit,
         clusters,
       });
     }
 
-    console.log("Checkout latest commit on the branch:", branch);
-    await git.checkout(branch);
+    if (totalCheckouts > 0) {
+      console.log("Checkout latest commit on the branch:", branch);
+      await git.checkout(branch);
+    }
   } catch (error) {
     console.error("Error retrieving branch name:", error);
   }
 
-  // @TODO - save the cache back to the file system so it can be saved and re-used
+  fs.writeFileSync(historyRecord, JSON.stringify(Array.from(history)));
 
   return history;
 }
 
-const mapHTML = generateMapHTML(gameConfig, await getHistory());
+const history = await getHistory();
+const mapHTML = generateMapHTML(gameConfig, history);
 fs.writeFileSync(mapOutput, mapHTML);
