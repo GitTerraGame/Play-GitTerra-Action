@@ -450,6 +450,7 @@ export const generateMapHTML = function (gameConfig, history) {
       // Playback
       playButton.addEventListener("click", function() {
         const maps = document.querySelectorAll("svg.map");
+        playButton.setAttribute("disabled", "disabled");
 
         let prevIndex = 0;
         let nextIndex = maps.length - 1;
@@ -473,6 +474,7 @@ export const generateMapHTML = function (gameConfig, history) {
           if (nextIndex < 0) {
             nextIndex = maps.length - 1;
             prevIndex = 0;
+            playButton.removeAttribute("disabled");
           } else {
             setTimeout(playNext, delay);
           }          
