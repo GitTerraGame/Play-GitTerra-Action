@@ -14,7 +14,7 @@ import getClusters from "./getClusters.js";
 // Constants
 const SCC = "/usr/local/bin/scc";
 const mapOutput = "index.html";
-const NUMBER_OF_COMMITS_TO_PROCESS_IN_ONE_GO = 5;
+const NUMBER_OF_COMMITS_TO_PROCESS_IN_ONE_GO = 100;
 
 let folder = "./";
 if (process.argv.length >= 3) {
@@ -77,7 +77,7 @@ async function getHistory() {
       return acc;
     }, new Map());
 
-    console.log("Commit days", commitsToDisplay);
+    console.log("Commit days", commitsToDisplay.keys());
 
     const commitIterator = commitsToDisplay.entries();
 
