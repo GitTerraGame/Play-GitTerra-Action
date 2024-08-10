@@ -4,7 +4,7 @@
   "description": "A git-based game running in CI/CD and played by coding",
   "main": "src/generateMap.js",
   "scripts": {
-    "test": "cd test && node ../src/generateMap.js .gitterra.config.js && open-cli index.html"
+    "test": "cd test && rm -f index.html && node ../src/generateMap.js ../../GitTerra_TestRepo && open-cli index.html"
   },
   "keywords": [
     "game",
@@ -20,6 +20,7 @@
     "open-cli": "^8.0.0"
   },
   "dependencies": {
-    "kmeansjs": "^0.0.3"
+    "kmeansjs": "^0.0.3",
+    "simple-git": "^3.25.0"
   }
 }
