@@ -72,10 +72,6 @@ runs:
       run: (cd builders && npm ci)
       shell: "bash"
 
-    - name: Building the city of GitTerra
-      run: node builders/src/generateMap.js scrolls/.gitterra.config.js
-      shell: "bash"
-
     - name: Checking history archives
       id: cache-history
       uses: actions/cache@v4
@@ -83,15 +79,13 @@ runs:
         cache-name: history
       with:
         # we only expect history to change when the repository changes and only going forward
-        path: history/
+        # it might be empty as caches get evicted after 7 days
+        # (@TODO replace with fetching back from the deployed map site)
+        path: history.json
         key: ${{ env.cache-name }}-${{ github.ref }}
 
-    - name: Rewriting today's history
-      run: rm -f ./history/$(cd scrolls; git log -n1 --pretty=format:"%ad" --date=short).json
-      shell: "bash"
-
-    - name: Generating historical records
-      run: builders/src/generate_history.sh wizard/scc ./scrolls ./history
+    - name: Building the city of GitTerra
+      run: node builders/src/generateMap.js scrolls/
       shell: "bash"
 
     - name: Archive the maps in the player's library
