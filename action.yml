@@ -37,10 +37,6 @@ runs:
         tar -C wizard/ -xvf wizard/scc.gz
       shell: "bash"
 
-    - name: Extracting the inner knowledge hidden inside the scrolls
-      run: time wizard/scc scrolls/ --by-file --format json --output gitterra.json
-      shell: "bash"
-
     - name: Transporting builders to the construction site
       uses: actions/checkout@v4
       with:
@@ -85,7 +81,7 @@ runs:
         key: ${{ env.cache-name }}-${{ github.ref }}
 
     - name: Building the city of GitTerra
-      run: node builders/src/generateMap.js scrolls/
+      run: node builders/src/generateMap.js scrolls/ wizard/scc
       shell: "bash"
 
     - name: Archive the maps in the player's library
