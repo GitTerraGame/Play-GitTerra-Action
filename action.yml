@@ -69,8 +69,8 @@ runs:
       shell: "bash"
 
     - name: Checking history archives
-      id: cache-history
-      uses: actions/cache@v4
+      id: cache-history-restore
+      uses: actions/cache/restore@v4
       env:
         cache-name: history
       with:
@@ -83,6 +83,18 @@ runs:
     - name: Building the city of GitTerra
       run: node builders/src/generateMap.js scrolls/ wizard/scc
       shell: "bash"
+
+    - name: Updating history archives
+      id: cache-history-update
+      uses: actions/cache/save@v4
+      env:
+        cache-name: history
+      with:
+        # we only expect history to change when the repository changes and only going forward
+        # it might be empty as caches get evicted after 7 days
+        # (@TODO replace with fetching back from the deployed map site)
+        path: history.json
+        key: ${{ env.cache-name }}-${{ github.ref }}
 
     - name: Archive the maps in the player's library
       uses: actions/upload-artifact@v4
