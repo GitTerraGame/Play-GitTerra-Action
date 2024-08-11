@@ -4,7 +4,7 @@
   "description": "A git-based game running in CI/CD and played by coding",
   "main": "src/generateMap.js",
   "scripts": {
-    "test": "cd test && rm -f index.html && node ../src/generateMap.js ~/sergeychernyshev.com && open-cli index.html",
+    "test": "cd test && rm -f index.html && node ../src/generateMap.js ../ && open-cli index.html",
     "clean-test": "cd test && rm -f index.html history.json"
   },
   "keywords": [
