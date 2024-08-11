@@ -78,7 +78,7 @@ runs:
         # it might be empty as caches get evicted after 7 days
         # (@TODO replace with fetching back from the deployed map site)
         path: history.json
-        key: ${{ env.cache-name }}-${{ github.ref }}
+        key: ${{ env.cache-name }}-${{ github.ref }}-
 
     - name: Building the city of GitTerra
       run: node builders/src/generateMap.js scrolls/ wizard/scc
@@ -94,7 +94,7 @@ runs:
         # it might be empty as caches get evicted after 7 days
         # (@TODO replace with fetching back from the deployed map site)
         path: history.json
-        key: ${{ env.cache-name }}-${{ github.ref }}
+        key: ${{ env.cache-name }}-${{ github.ref }}-${{ hashFiles('history.json') }}
 
     - name: Archive the maps in the player's library
       uses: actions/upload-artifact@v4
