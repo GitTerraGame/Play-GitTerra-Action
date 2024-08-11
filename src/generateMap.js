@@ -83,7 +83,7 @@ async function getHistory() {
   // log in reverse order (latest commit first)
   const log = await git.log();
 
-  console.log("Total commits", log.total);
+  console.log("Total commits:", log.total);
 
   // Get latest commit per day
   // Note: in JavaScript Maps preserve order of insertion so we can rely on it being in the reverse chronological order
@@ -95,7 +95,8 @@ async function getHistory() {
     return acc;
   }, new Map());
 
-  console.log("Total commit days", commitsToDisplay.size);
+  console.log("Total commit days:", commitsToDisplay.size);
+  console.log("History records already exist for days:", history.size);
 
   const commitIterator = commitsToDisplay.entries();
 
