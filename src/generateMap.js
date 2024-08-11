@@ -12,14 +12,24 @@ import { getGameConfig } from "./gameConfig.js";
 import getClusters from "./getClusters.js";
 
 // Constants
-const SCC = "/usr/local/bin/scc";
 const mapOutput = "index.html";
 const historyRecord = "history.json";
 const NUMBER_OF_COMMITS_TO_PROCESS_IN_ONE_GO = 5;
 
-let folder = "./";
+let folder;
 if (process.argv.length >= 3) {
   folder = process.argv[2];
+} else {
+  console.error("Please provide the path to the repository");
+  process.exit(1);
+}
+
+let SCC;
+if (process.argv.length >= 4) {
+  SCC = process.argv[3];
+} else {
+  console.error("Please provide the path to the scc binary");
+  process.exit(1);
 }
 
 let gameConfig = await getGameConfig(`${folder}/.gitterra.config.js`);
