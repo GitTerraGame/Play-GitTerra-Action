@@ -14,7 +14,6 @@ import getClusters from "./getClusters.js";
 // Constants
 const mapOutput = "index.html";
 const historyRecord = "history.json";
-const NUMBER_OF_COMMITS_TO_PROCESS_IN_ONE_GO = 5;
 
 let folder;
 if (process.argv.length >= 3) {
@@ -115,7 +114,7 @@ async function getHistory() {
 
   let totalCheckouts = 0;
 
-  for (let i = 1; i < NUMBER_OF_COMMITS_TO_PROCESS_IN_ONE_GO; i++) {
+  for (let i = 1; i < gameConfig.timelapseLookBackPerfRun; i++) {
     let entry = commitIterator.next();
     if (entry.done) {
       break;
