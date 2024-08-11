@@ -37,7 +37,12 @@ let gameConfig = await getGameConfig(`${folder}/.gitterra.config.js`);
 console.log("[Game Configuration]\n", gameConfig);
 
 async function processRepo() {
-  const SCCResult = spawnSync(SCC, [folder, "--by-file", "--format=json"]);
+  const SCCResult = spawnSync(SCC, [
+    folder,
+    "--by-file",
+    "--format=json",
+    "--output=gitterra-stats.json",
+  ]);
 
   // Check if the process completed successfully
   if (SCCResult.error) {
@@ -53,7 +58,7 @@ async function processRepo() {
     process.exit(1);
   }
 
-  const repo = JSON.parse(SCCResult.stdout.toString());
+  const repo = JSON.parse(fs.readFileSync("gitterra-stats.json"));
 
   // Generate the map for last commit in the repository
   const clusters = await getClusters(repo, gameConfig);
