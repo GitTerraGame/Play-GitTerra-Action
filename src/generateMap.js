@@ -32,7 +32,7 @@ async function processRepo() {
   // Check if the process completed successfully
   if (SCCResult.error) {
     console.error("Failed to start subprocess:", SCCResult.error);
-    exit(1);
+    process.exit(1);
   }
 
   // Check the exit code to see if it was successful
@@ -40,7 +40,7 @@ async function processRepo() {
     console.log(`Child process exited with code ${SCCResult.status}`);
     console.error("Error output:");
     console.error(SCCResult.stderr.toString());
-    exit(1);
+    process.exit(1);
   }
 
   const repo = JSON.parse(SCCResult.stdout.toString());
@@ -59,81 +59,93 @@ async function getHistory() {
     : new Map();
 
   // wrapping the code in a try-catch block to handle git errors
+  let branch;
   try {
     // Get the current branch
-    const branch = (await git.branch()).current;
+    branch = (await git.branch()).current;
+  } catch (error) {
+    console.error("Error retrieving branch name:", error);
+    process.exit(1);
+  }
 
-    console.log("Current branch:", branch);
+  console.log("Current branch:", branch);
 
-    // log in reverse order (latest commit first)
-    const log = await git.log();
+  // log in reverse order (latest commit first)
+  const log = await git.log();
 
-    console.log("Total commits", log.total);
+  console.log("Total commits", log.total);
 
-    // Get latest commit per day
-    // Note: in JavaScript Maps preserve order of insertion so we can rely on it being in the reverse chronological order
-    const commitsToDisplay = log.all.reduce((acc, commit) => {
-      const date = new Date(commit.date);
-      const day = date.toDateString();
+  // Get latest commit per day
+  // Note: in JavaScript Maps preserve order of insertion so we can rely on it being in the reverse chronological order
+  const commitsToDisplay = log.all.reduce((acc, commit) => {
+    const date = new Date(commit.date);
+    const day = date.toDateString();
 
-      acc.set(day, commit.hash);
-      return acc;
-    }, new Map());
+    acc.set(day, commit.hash);
+    return acc;
+  }, new Map());
 
-    console.log("Commit days", commitsToDisplay.keys());
+  console.log("Total commit days", commitsToDisplay.size);
 
-    const commitIterator = commitsToDisplay.entries();
+  const commitIterator = commitsToDisplay.entries();
 
-    // add latest commit without checkout it out
-    const [day, commitHash] = commitIterator.next().value;
-    history.set(day, {
-      commitHash,
-      clusters: await processRepo(),
-    });
+  // always override the history for the latest commit without checkout it out
+  const [day, commitHash] = commitIterator.next().value;
+  history.set(day, {
+    clusters: await processRepo(),
+  });
 
-    console.log("Latest commit:", day, commitHash);
+  console.log("Latest commit:", day, commitHash);
 
-    let totalCheckouts = 0;
+  let totalCheckouts = 0;
 
-    for (let i = 1; i < NUMBER_OF_COMMITS_TO_PROCESS_IN_ONE_GO; i++) {
-      let entry = commitIterator.next();
-      if (entry.done) {
-        break;
-      }
-
-      // skip if already processed
-      while (history.has(entry.value[0])) {
-        entry = commitIterator.next();
-
-        if (entry.done) {
-          break;
-        }
-      }
-
-      if (entry.done) {
-        break;
-      }
-
-      const day = entry.value[0];
-      const commitHash = entry.value[1];
-
-      console.log("Checkout commit for the day:", day, commitHash);
-
-      await git.checkout(commitHash);
-      totalCheckouts++;
-      const clusters = await processRepo();
-
-      history.set(day, {
-        clusters,
-      });
+  for (let i = 1; i < NUMBER_OF_COMMITS_TO_PROCESS_IN_ONE_GO; i++) {
+    let entry = commitIterator.next();
+    if (entry.done) {
+      break;
     }
 
+    // skip if already processed
+    while (history.has(entry.value[0])) {
+      entry = commitIterator.next();
+
+      if (entry.done) {
+        break;
+      }
+    }
+
+    if (entry.done) {
+      break;
+    }
+
+    const day = entry.value[0];
+    const commitHash = entry.value[1];
+
+    console.log("Checkout commit for the day:", day, commitHash);
+
+    try {
+      await git.checkout(commitHash);
+    } catch (error) {
+      console.error("Error retrieving branch name:", error);
+      process.exit(1);
+    }
+
+    totalCheckouts++;
+    const clusters = await processRepo();
+
+    history.set(day, {
+      clusters,
+    });
+  }
+
+  try {
     if (totalCheckouts > 0) {
       console.log("Checkout latest commit on the branch:", branch);
       await git.checkout(branch);
     }
   } catch (error) {
-    console.error("Error retrieving branch name:", error);
+    console.error("Error checkoing out the original branch:", error);
+    process.exit(1);
   }
 
   fs.writeFileSync(historyRecord, JSON.stringify(Array.from(history)));
