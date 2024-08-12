@@ -90,12 +90,14 @@ async function getHistory() {
   console.log("Total commits:", log.total);
 
   // Get latest commit per day
-  // Note: in JavaScript Maps preserve order of insertion so we can rely on it being in the reverse chronological order
   const commitsToDisplay = log.all.reduce((acc, commit) => {
     const date = new Date(commit.date);
     const day = date.toDateString();
 
-    acc.set(day, commit.hash);
+    if (!acc.has(day)) {
+      acc.set(day, commit.hash);
+    }
+
     return acc;
   }, new Map());
 
@@ -104,7 +106,7 @@ async function getHistory() {
 
   const commitIterator = commitsToDisplay.entries();
 
-  // always override the history for the latest commit without checkout it out
+  // always override the history for the latest commit and we don't need to check it out
   const [day, commitHash] = commitIterator.next().value;
   history.set(day, {
     clusters: await processRepo(),
@@ -133,8 +135,7 @@ async function getHistory() {
       break;
     }
 
-    const day = entry.value[0];
-    const commitHash = entry.value[1];
+    const [day, commitHash] = entry.value;
 
     console.log("Checkout commit for the day:", day, commitHash);
 
