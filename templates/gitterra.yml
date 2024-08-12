@@ -13,7 +13,7 @@ GitTerraHistory:
 GitTerra:
   stage: play GitTerra
   image: node:latest
-  needs: []
+  needs: [GitTerraHistory]
   script:
     - echo "Let's play GitTerra!"
     # - set
