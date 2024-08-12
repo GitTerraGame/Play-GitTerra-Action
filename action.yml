@@ -1,6 +1,12 @@
 name: play-gitterra
 description: This action will let you play GitTerra game in your repository
 author: GitTerra Team
+inputs:
+  deploy-destination:
+    description: "Base URL of the deployment destination"
+    required: false
+    default: ${CI_PAGES_URL}
+
 branding:
   icon: "map"
   color: "blue"
@@ -80,6 +86,10 @@ runs:
         path: history.json
         key: ${{ env.cache-name }}-${{ github.ref }}-
 
+    - name: Get history from the site
+      run: curl -o history.json ${{ inputs.deploy-destination }}/history.json
+      shell: "bash"
+
     - name: Building the city of GitTerra
       run: node builders/src/generateMap.js scrolls/ wizard/scc
       shell: "bash"
@@ -102,3 +112,4 @@ runs:
         name: gitterra
         path: |
           index.html
+          history.json
