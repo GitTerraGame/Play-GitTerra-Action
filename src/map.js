@@ -280,6 +280,7 @@ export const generateMapHTML = function (gameConfig, history) {
 
   let mapSVGs = "";
   let hidden = false;
+
   Array.from(history.entries())
     .sort(([dayA], [dayB]) => new Date(dayB) - new Date(dayA))
     .forEach(([dateString, { clusters }]) => {
@@ -301,6 +302,73 @@ export const generateMapHTML = function (gameConfig, history) {
         hidden = true;
       }
     });
+
+  const timelapseHTML = gameConfig.createTimelapse
+    ? `<div id="history">
+      <h2 id="date">${lastDateString}</h2>
+      <div id="history-controls">
+        <button id="play">Play &#9654;</button>
+        <input type="range" id="history-slider" min="${firstDateSec}" max="${lastDateSec}" value="${lastDateSec}" disabled/>
+      </div>
+      <div id="speed-controls">
+        <label for="speed-slider">Speed</label>
+        <input type="range" id="speed-slider" min="200" max="2000" value="1500"/>
+      </div>
+    </div>
+    
+    <script>
+      const playButton = document.getElementById("play");
+      const historySlider = document.getElementById("history-slider");
+      const speedSlider = document.getElementById("speed-slider");
+      const dateLabel = document.getElementById("date");
+
+      // Read speed from slider
+      let delay;
+      const maxDelay = parseInt(speedSlider.getAttribute("max"));
+      function updateDelay() {
+        delay = maxDelay - parseInt(speedSlider.value) + 200;
+      }
+      updateDelay();
+      speedSlider.addEventListener("input", updateDelay);
+
+      // Playback
+      playButton.addEventListener("click", function() {
+        const maps = document.querySelectorAll("svg.map");
+        playButton.setAttribute("disabled", "disabled");
+
+        let prevIndex = 0;
+        let nextIndex = maps.length - 1;
+
+        function playNext() {
+          if (prevIndex < maps.length) {
+            maps[prevIndex].classList.add("hidden");
+          }
+          if (nextIndex < maps.length) {
+            maps[nextIndex].classList.remove("hidden");
+          }
+
+          const dateString = maps[nextIndex].getAttribute("data-date");
+          dateLabel.textContent = dateString;
+          historySlider.setAttribute("value", new Date(dateString) / 1000);
+
+          // prep for next iteration
+          prevIndex = nextIndex;
+          nextIndex--;
+
+          if (nextIndex < 0) {
+            nextIndex = maps.length - 1;
+            prevIndex = 0;
+            playButton.removeAttribute("disabled");
+          } else {
+            setTimeout(playNext, delay);
+          }          
+        }
+
+        playNext();
+      });
+    </script>`
+    : "";
+
   return `<!doctype html>
 <html>
   <head>
@@ -422,69 +490,7 @@ export const generateMapHTML = function (gameConfig, history) {
         How can we make this game better?
       </a>
     </div>
-    <div id="history">
-      <h2 id="date">${lastDateString}</h2>
-      <div id="history-controls">
-        <button id="play">Play &#9654;</button>
-        <input type="range" id="history-slider" min="${firstDateSec}" max="${lastDateSec}" value="${lastDateSec}" disabled/>
-      </div>
-      <div id="speed-controls">
-        <label for="speed-slider">Speed</label>
-        <input type="range" id="speed-slider" min="200" max="2000" value="1500"/>
-      </div>
-    </div>
-    
-    <script>
-      const playButton = document.getElementById("play");
-      const historySlider = document.getElementById("history-slider");
-      const speedSlider = document.getElementById("speed-slider");
-      const dateLabel = document.getElementById("date");
-
-      // Read speed from slider
-      let delay;
-      const maxDelay = parseInt(speedSlider.getAttribute("max"));
-      function updateDelay() {
-        delay = maxDelay - parseInt(speedSlider.value) + 200;
-      }
-      updateDelay();
-      speedSlider.addEventListener("input", updateDelay);
-
-      // Playback
-      playButton.addEventListener("click", function() {
-        const maps = document.querySelectorAll("svg.map");
-        playButton.setAttribute("disabled", "disabled");
-
-        let prevIndex = 0;
-        let nextIndex = maps.length - 1;
-
-        function playNext() {
-          if (prevIndex < maps.length) {
-            maps[prevIndex].classList.add("hidden");
-          }
-          if (nextIndex < maps.length) {
-            maps[nextIndex].classList.remove("hidden");
-          }
-
-          const dateString = maps[nextIndex].getAttribute("data-date");
-          dateLabel.textContent = dateString;
-          historySlider.setAttribute("value", new Date(dateString) / 1000);
-
-          // prep for next iteration
-          prevIndex = nextIndex;
-          nextIndex--;
-
-          if (nextIndex < 0) {
-            nextIndex = maps.length - 1;
-            prevIndex = 0;
-            playButton.removeAttribute("disabled");
-          } else {
-            setTimeout(playNext, delay);
-          }          
-        }
-
-        playNext();
-      });
-    </script>
+    ${timelapseHTML}
     ${mapSVGs}
     <div class="tileset">
     ${spriteEmbeds}
