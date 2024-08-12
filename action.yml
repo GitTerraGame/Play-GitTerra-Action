@@ -1,11 +1,11 @@
 name: play-gitterra
 description: This action will let you play GitTerra game in your repository
 author: GitTerra Team
-inputs:
-  deploy-destination:
-    description: "Base URL of the deployment destination"
-    required: false
-    default: ${{ CI_PAGES_URL }}
+# inputs:
+#   deploy-destination:
+#     description: "Base URL of the deployment destination"
+#     required: false
+#     default: ${{ CI_PAGES_URL }}
 
 branding:
   icon: "map"
@@ -89,8 +89,8 @@ runs:
     - name: Get history from the site
       run: |
         BASE_URL=$(gh api "repos/$GITHUB_REPOSITORY/pages" --jq '.html_url')
-        echo "Main site is at ${{ BASE_URL }}"
-        curl -o history.json ${{ BASE_URL }}/history.json
+        echo "Main site is at $BASE_URL"
+        curl -o history.json ${BASE_URL}/history.json
       shell: "bash"
 
     - name: Building the city of GitTerra
