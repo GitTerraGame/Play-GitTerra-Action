@@ -90,6 +90,7 @@ runs:
       if: ${{ inputs.deploy-destination != '' }}
       run: curl -f -o history.json ${{ inputs.deploy-destination }}/history.json
       shell: "bash"
+      continue-on-error: true
 
     - name: Building the city of GitTerra
       run: node builders/src/generateMap.js scrolls/ wizard/scc
