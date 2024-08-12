@@ -16,7 +16,7 @@ GitTerra:
     - tar -C /tmp/gitterra/scc -xvf /tmp/gitterra/scc/scc.gz
     - chmod +x /tmp/gitterra/scc/scc
     - echo "Fetching history from ${CI_PAGES_URL}/history.json"
-    - curl -f -o history.json ${CI_PAGES_URL}/history.json
+    - curl -L -f -o history.json ${CI_PAGES_URL}/history.json
     - node /tmp/gitterra/gitterra/src/generateMap.js ./ /tmp/gitterra/scc/scc
   artifacts:
     paths:
