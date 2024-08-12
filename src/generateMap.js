@@ -31,7 +31,10 @@ if (process.argv.length >= 4) {
   process.exit(1);
 }
 
-let gameConfig = await getGameConfig(`${folder}/.gitterra.config.js`);
+let gameConfig = await getGameConfig(
+  `${folder}/.gitterra.config.mjs`,
+  `${folder}/.gitterra.config.js`
+);
 
 console.log("[Game Configuration]\n", gameConfig);
 
