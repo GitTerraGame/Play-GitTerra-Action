@@ -10,8 +10,10 @@ export const defaultGameConfig = {
   timelapseLookBackPerfRun: 20,
 };
 
-export const getGameConfig = async (filename) => {
-  if (!fs.existsSync(filename)) {
+export const getGameConfig = async (...filenames) => {
+  const filename = filenames.find(fs.existsSync);
+
+  if (!filename) {
     return defaultGameConfig;
   }
 
