@@ -92,6 +92,8 @@ runs:
         echo "Main site is at $BASE_URL"
         curl -o history.json ${BASE_URL}/history.json
       shell: "bash"
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Building the city of GitTerra
       run: node builders/src/generateMap.js scrolls/ wizard/scc
