@@ -8,6 +8,7 @@ export const defaultGameConfig = {
   tileSet: novaTerraPrime,
   minTiles: 10,
   timelapseLookBackPerfRun: 20,
+  createTimelapse: false,
 };
 
 export const getGameConfig = async (...filenames) => {
