@@ -86,8 +86,8 @@ runs:
         key: ${{ env.cache-name }}-${{ github.ref }}-
 
     - name: Get history from the site
-      if: ${{ input.deploy-destination }}
-      run: curl -o history.json ${{ input.deploy-destination }}/history.json
+      if: ${{ inputs.deploy-destination }}
+      run: curl -o history.json ${{ inputs.deploy-destination }}/history.json
       shell: "bash"
 
     - name: Building the city of GitTerra
