@@ -74,6 +74,7 @@ runs:
       shell: "bash"
 
     - name: Checking history archives
+      if: ${{ !inputs.deploy-destination }}
       id: cache-history-restore
       uses: actions/cache/restore@v4
       env:
@@ -95,6 +96,7 @@ runs:
       shell: "bash"
 
     - name: Updating history archives
+      if: ${{ !inputs.deploy-destination }}
       id: cache-history-update
       uses: actions/cache/save@v4
       env:
