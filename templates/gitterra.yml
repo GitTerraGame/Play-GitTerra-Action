@@ -15,6 +15,7 @@ GitTerra:
     - wget https://github.com/boyter/scc/releases/download/v3.2.0/scc_Linux_x86_64.tar.gz -O /tmp/gitterra/scc/scc.gz
     - tar -C /tmp/gitterra/scc -xvf /tmp/gitterra/scc/scc.gz
     - chmod +x /tmp/gitterra/scc/scc
+    - echo "Fetching history from ${CI_PAGES_URL}/history.json"
     - curl -f -o history.json ${CI_PAGES_URL}/history.json
     - node /tmp/gitterra/gitterra/src/generateMap.js ./ /tmp/gitterra/scc/scc
   artifacts:
