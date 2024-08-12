@@ -5,7 +5,7 @@ inputs:
   deploy-destination:
     description: "Base URL of the deployment destination"
     required: false
-    default: ${CI_PAGES_URL}
+    default: ${{ CI_PAGES_URL }}
 
 branding:
   icon: "map"
