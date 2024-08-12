@@ -280,25 +280,27 @@ export const generateMapHTML = function (gameConfig, history) {
 
   let mapSVGs = "";
   let hidden = false;
-  history.forEach(({ clusters }, day) => {
-    mapSVGs +=
-      "\n" +
-      generateMapSVG(
-        languages,
-        sprites,
-        tileWidth,
-        tileBaseHeight,
-        tallestSprite,
-        clusters,
-        day,
-        hidden
-      );
+  Array.from(history.entries())
+    .sort(([dayA], [dayB]) => new Date(dayB) - new Date(dayA))
+    .forEach(([dateString, { clusters }]) => {
+      mapSVGs +=
+        "\n" +
+        generateMapSVG(
+          languages,
+          sprites,
+          tileWidth,
+          tileBaseHeight,
+          tallestSprite,
+          clusters,
+          dateString,
+          hidden
+        );
 
-    // don't hide the first map
-    if (!hidden) {
-      hidden = true;
-    }
-  });
+      // don't hide the first map
+      if (!hidden) {
+        hidden = true;
+      }
+    });
   return `<!doctype html>
 <html>
   <head>
@@ -421,7 +423,7 @@ export const generateMapHTML = function (gameConfig, history) {
       </a>
     </div>
     <div id="history">
-      <h2 id="date">${firstDateString}</h2>
+      <h2 id="date">${lastDateString}</h2>
       <div id="history-controls">
         <button id="play">Play &#9654;</button>
         <input type="range" id="history-slider" min="${firstDateSec}" max="${lastDateSec}" value="${lastDateSec}" disabled/>
