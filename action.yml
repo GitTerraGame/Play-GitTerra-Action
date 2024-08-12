@@ -88,7 +88,7 @@ runs:
 
     - name: Get history from the site
       if: ${{ inputs.deploy-destination != '' }}
-      run: curl -f -o history.json ${{ inputs.deploy-destination }}/history.json
+      run: curl -L -f -o history.json ${{ inputs.deploy-destination }}/history.json
       shell: "bash"
       continue-on-error: true
 
