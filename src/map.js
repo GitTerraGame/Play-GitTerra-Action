@@ -264,7 +264,11 @@ export const generateMapSVG = function (
 };
 
 export const generateMapHTML = function (gameConfig, history) {
-  const historyDates = Array.from(history.keys());
+  const sortedHistoryPairs = Array.from(history.entries()).sort(
+    ([dayA], [dayB]) => new Date(dayB) - new Date(dayA)
+  );
+
+  const historyDates = sortedHistoryPairs.map(([dateString]) => dateString);
   const firstDateString = historyDates[historyDates.length - 1];
   const lastDateString = historyDates[0];
   const firstDateSec = new Date(firstDateString) / 1000;
@@ -281,27 +285,25 @@ export const generateMapHTML = function (gameConfig, history) {
   let mapSVGs = "";
   let hidden = false;
 
-  Array.from(history.entries())
-    .sort(([dayA], [dayB]) => new Date(dayB) - new Date(dayA))
-    .forEach(([dateString, { clusters }]) => {
-      mapSVGs +=
-        "\n" +
-        generateMapSVG(
-          languages,
-          sprites,
-          tileWidth,
-          tileBaseHeight,
-          tallestSprite,
-          clusters,
-          dateString,
-          hidden
-        );
+  sortedHistoryPairs.forEach(([dateString, { clusters }]) => {
+    mapSVGs +=
+      "\n" +
+      generateMapSVG(
+        languages,
+        sprites,
+        tileWidth,
+        tileBaseHeight,
+        tallestSprite,
+        clusters,
+        dateString,
+        hidden
+      );
 
-      // don't hide the first map
-      if (!hidden) {
-        hidden = true;
-      }
-    });
+    // don't hide the first map
+    if (!hidden) {
+      hidden = true;
+    }
+  });
 
   const timelapseHTML = gameConfig.createTimelapse
     ? `<div id="history">
