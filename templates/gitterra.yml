@@ -1,7 +1,7 @@
 spec:
   inputs:
     fetch-depth:
-      default: 100000
+      default: "100000"
 ---
 stages:
   - play GitTerra
