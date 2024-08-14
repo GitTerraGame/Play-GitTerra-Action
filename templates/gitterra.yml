@@ -1,3 +1,8 @@
+spec:
+  inputs:
+    fetch-depth:
+      default: 100000
+
 stages:
   - play GitTerra
 
@@ -7,7 +12,7 @@ GitTerra:
   needs: []
   variables:
     # @TODO Parametrize this
-    GIT_DEPTH: 100000
+    GIT_DEPTH: $[[ inputs.fetch-depth ]]
   script:
     - echo "Let's play GitTerra!"
     # - set
