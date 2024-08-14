@@ -1,10 +1,12 @@
+spec:
+  inputs:
+    fetch-depth: 100000
+
 stages:
   - play GitTerra
 
 GitTerra:
   stage: play GitTerra
-  inputs:
-    fetch-depth: 100000
   image: node:latest
   needs: []
   variables:
