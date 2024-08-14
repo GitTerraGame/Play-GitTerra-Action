@@ -8,7 +8,7 @@ inputs:
   fetch-depth:
     description: "The depth of commits to fetch"
     required: false
-    default: 100000
+    default: "100000"
 
 branding:
   icon: "map"
@@ -27,7 +27,7 @@ runs:
         fetch-depth: ${{ inputs.fetch-depth }}
         ref: ${{ github.ref }}
 
-    - name: Asking our wizard to extract the inner knowledge
+    - name: Inviting a wizard from a distant land
       id: cache-scc
       uses: actions/cache@v4
       env:
@@ -38,7 +38,7 @@ runs:
         key: ${{ env.cache-name }}
 
     - if: ${{ steps.cache-scc.outputs.cache-hit != 'true' }}
-      name: Inviting a wizard from a distant land
+      name: Providing transportation for a wizard if they are away
       run: |
         mkdir -p wizard
         wget https://github.com/boyter/scc/releases/download/v3.2.0/scc_Linux_x86_64.tar.gz -O wizard/scc.gz
@@ -89,7 +89,7 @@ runs:
         path: history.json
         key: ${{ env.cache-name }}-${{ github.ref }}-
 
-    - name: Get history from the site
+    - name: Checking the library that we build for the history records
       if: ${{ inputs.deploy-destination != '' }}
       run: curl -L -f -o history.json ${{ inputs.deploy-destination }}/history.json
       shell: "bash"

@@ -11,20 +11,22 @@ GitTerra:
   image: node:latest
   needs: []
   variables:
-    # @TODO Parametrize this
     GIT_DEPTH: $[[ inputs.fetch-depth ]]
   script:
     - echo "Let's play GitTerra!"
-    # - set
-    # - find . -not -path './.git' -not -path './.git/*'
-    - mkdir -p /tmp/gitterra/scc
+    - echo "===================="
+    - echo Transporting builders to the construction site
+    - mkdir -p /tmp/gitterra
     - git clone --single-branch --depth=1 -b timelapse https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/gitterra/GitTerra.git /tmp/gitterra/gitterra
     - (cd /tmp/gitterra/gitterra && npm install)
+    - echo Inviting a wizard from a distant land
+    - mkdir -p /tmp/gitterra/scc
     - wget https://github.com/boyter/scc/releases/download/v3.2.0/scc_Linux_x86_64.tar.gz -O /tmp/gitterra/scc/scc.gz
     - tar -C /tmp/gitterra/scc -xvf /tmp/gitterra/scc/scc.gz
     - chmod +x /tmp/gitterra/scc/scc
-    - echo "Fetching history from ${CI_PAGES_URL}/history.json"
+    - echo "Checking the library that we build for the history records"
     - curl -L -f -o history.json ${CI_PAGES_URL}/history.json || true
+    - echo "Building the city of GitTerra"
     - node /tmp/gitterra/gitterra/src/generateMap.js ./ /tmp/gitterra/scc/scc
   artifacts:
     paths:
