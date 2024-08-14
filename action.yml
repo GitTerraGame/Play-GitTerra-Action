@@ -5,6 +5,10 @@ inputs:
   deploy-destination:
     description: "Base URL of the deployment destination"
     required: false
+  fetch-depth:
+    description: "The depth of commits to fetch"
+    required: false
+    default: 100000
 
 branding:
   icon: "map"
@@ -20,8 +24,7 @@ runs:
       uses: actions/checkout@v4
       with:
         path: "scrolls"
-        # @TODO make this maximum configurable
-        fetch-depth: 10000
+        fetch-depth: ${{ inputs.fetch-depth }}
         ref: ${{ github.ref }}
 
     - name: Asking our wizard to extract the inner knowledge
