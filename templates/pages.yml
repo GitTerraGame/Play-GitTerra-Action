@@ -9,7 +9,10 @@ pages:
     - echo "Deploying GitTerra page and history to GitLab Pages"
     - mkdir public/
     - mv index.html public/
-    - mv history.json public/
+    - |
+      if [[ -f history.json ]]; then
+        mv history.json public/
+      fi
   artifacts:
     paths:
       # The folder that contains the files to be exposed at the Page URL
