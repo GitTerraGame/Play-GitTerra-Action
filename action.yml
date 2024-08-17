@@ -50,8 +50,6 @@ runs:
       with:
         repository: "GitTerraGame/Play-GitTerra-Action"
         path: "builders"
-        #TODO: remove the ref once the action is merged
-        ref: "timelapse"
 
     - name: Looking for a stash of existing tools
       id: cache-npm

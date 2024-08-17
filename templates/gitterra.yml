@@ -17,7 +17,7 @@ GitTerra:
     - echo "===================="
     - echo Transporting builders to the construction site
     - mkdir -p /tmp/gitterra
-    - git clone --single-branch --depth=1 -b timelapse https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/gitterra/GitTerra.git /tmp/gitterra/gitterra
+    - git clone --single-branch --depth=1 https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/gitterra/GitTerra.git /tmp/gitterra/gitterra
     - (cd /tmp/gitterra/gitterra && npm install)
     - echo Inviting a wizard from a distant land
     - mkdir -p /tmp/gitterra/scc
