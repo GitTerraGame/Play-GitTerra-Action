@@ -89,7 +89,7 @@ runs:
 
     - name: Checking the library that we build for the history records
       if: ${{ inputs.deploy-destination != '' }}
-      run: curl -L -f -o history.json ${{ inputs.deploy-destination }}/history.json
+      run: curl -L -f -o history.json ${{ inputs.deploy-destination }}/history.json || true
       shell: "bash"
       continue-on-error: true
 
