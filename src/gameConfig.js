@@ -3,12 +3,14 @@ import fs from "fs";
 import { pathToFileURL } from "url";
 
 import novaTerraPrime from "./tiles/novaTerraPrime.js";
+import clusterize from "./clusterize.js";
 
 export const defaultGameConfig = {
   tileSet: novaTerraPrime,
   minTiles: 10,
   timelapseLookBackPerfRun: 20,
   createTimelapse: false,
+  clusterize,
 };
 
 export const getGameConfig = async (...filenames) => {

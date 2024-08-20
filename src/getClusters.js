@@ -52,7 +52,7 @@ async function getClusters(repo, gameConfig) {
    * Deterministicly group files into clusters for each city block
    */
   const files = repo.map((elem) => elem.Files).flat();
-  const clusters = await clusterize(files, number_of_blocks);
+  const clusters = await gameConfig.clusterize(files, number_of_blocks);
 
   return clusters.map((cluster) => {
     const summary = {};
