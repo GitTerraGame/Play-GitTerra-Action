@@ -1,5 +1,3 @@
-import clusterize from "./clusterize.js";
-
 async function getClusters(repo, gameConfig) {
   const repoStats = {
     total: {

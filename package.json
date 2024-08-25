@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "kmeansjs": "^0.0.3",
+    "node-kmeans": "^1.1.9",
     "simple-git": "^3.25.0"
   }
 }
