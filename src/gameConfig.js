@@ -3,7 +3,7 @@ import fs from "fs";
 import { pathToFileURL } from "url";
 
 import novaTerraPrime from "./tiles/novaTerraPrime.js";
-import clusterize from "./clusterize.js";
+import clusterize from "./clusterizers/bysize.js";
 
 export const defaultGameConfig = {
   tileSet: novaTerraPrime,
