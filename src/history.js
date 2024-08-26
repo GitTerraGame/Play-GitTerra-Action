@@ -130,6 +130,11 @@ export async function getFullHistory(gameConfig, SCC, folder) {
 export async function getLastCommit(gameConfig, SCC, folder) {
   const history = new Map();
 
+  // we are not supposed to keep history, nuke it if it exists!
+  if (fs.existsSync(historyRecord)) {
+    fs.unlinkSync(historyRecord);
+  }
+
   history.set(new Date().toDateString(), {
     clusters: await processRepo(gameConfig, SCC, folder),
   });
