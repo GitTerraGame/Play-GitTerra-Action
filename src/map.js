@@ -251,16 +251,18 @@ export const generateMapSVG = function (
 
   const dateId = dateString.replace(/[^A-Za-z0-9]/g, "-");
 
-  return `<svg class="map${
-    hidden ? " hidden" : ""
-  }" id="date_${dateId}" data-date="${dateString}" viewBox="0 ${lowestIsoY} ${Math.ceil(
-    mapWidth
-  )} ${Math.ceil(
+  return `<div
+    id="date_${dateId}"
+    data-date="${dateString}"
+    class="map${hidden ? " hidden" : ""}"
+  >${hidden ? "<!-- " : ""}
+    <svg viewBox="0 ${lowestIsoY} ${Math.ceil(mapWidth)} ${Math.ceil(
     mapHeight - lowestIsoY
   )}" style="fill-rule:evenodd; clip-rule:evenodd; stroke-linecap:round; stroke-linejoin:round; stroke-miterlimit:1.5;">
       <title>${dateString}</title>
       ${tileImages.join("")}
-    </svg>`;
+    </svg>${hidden ? " -->" : ""}
+  </div>`;
 };
 
 export const generateMapHTML = function (gameConfig, history) {
@@ -282,22 +284,27 @@ export const generateMapHTML = function (gameConfig, history) {
 
   const { languages, languageStyles } = getHistoricalLanguages(history);
 
-  let mapSVGs = "";
+  let mapSVG = "";
+  let timelapseSVGs = "";
   let hidden = false;
 
   sortedHistoryPairs.forEach(([dateString, { clusters }]) => {
-    mapSVGs +=
-      "\n" +
-      generateMapSVG(
-        languages,
-        sprites,
-        tileWidth,
-        tileBaseHeight,
-        tallestSprite,
-        clusters,
-        dateString,
-        hidden
-      );
+    const chunkSVG = generateMapSVG(
+      languages,
+      sprites,
+      tileWidth,
+      tileBaseHeight,
+      tallestSprite,
+      clusters,
+      dateString,
+      hidden
+    );
+
+    if (hidden) {
+      timelapseSVGs += "\n" + chunkSVG;
+    } else {
+      mapSVG += "\n" + chunkSVG;
+    }
 
     // don't hide the first map
     if (!hidden) {
@@ -305,7 +312,7 @@ export const generateMapHTML = function (gameConfig, history) {
     }
   });
 
-  const timelapseHTML = gameConfig.createTimelapse
+  const timelapseControlsHTML = gameConfig.createTimelapse
     ? `<div id="history">
       <h2 id="date">${lastDateString}</h2>
       <div id="history-controls">
@@ -335,7 +342,7 @@ export const generateMapHTML = function (gameConfig, history) {
 
       // Playback
       playButton.addEventListener("click", function() {
-        const maps = document.querySelectorAll("svg.map");
+        const maps = document.querySelectorAll(".map");
         playButton.setAttribute("disabled", "disabled");
 
         let prevIndex = 0;
@@ -343,9 +350,11 @@ export const generateMapHTML = function (gameConfig, history) {
 
         function playNext() {
           if (prevIndex < maps.length) {
+            maps[prevIndex].innerHTML = "<!-- " + maps[prevIndex].innerHTML + " -->";
             maps[prevIndex].classList.add("hidden");
           }
           if (nextIndex < maps.length) {
+            maps[nextIndex].innerHTML = maps[nextIndex].innerHTML.replaceAll("<!-- ", "").replaceAll(" -->", "");
             maps[nextIndex].classList.remove("hidden");
           }
 
@@ -413,6 +422,11 @@ export const generateMapHTML = function (gameConfig, history) {
     }
 
     .map {
+      width: 100%;
+      text-align: center;
+    }
+
+    .map svg {
       width: 90%;
     }
 
@@ -452,7 +466,7 @@ export const generateMapHTML = function (gameConfig, history) {
       fill: var(--primary-color-darker) !important;
     }
 
-    svg.map.hidden {
+    .map.hidden {
       display: none;
     }
 
@@ -492,11 +506,12 @@ export const generateMapHTML = function (gameConfig, history) {
         How can we make this game better?
       </a>
     </div>
-    ${timelapseHTML}
-    ${mapSVGs}
+    ${timelapseControlsHTML}
+    ${mapSVG}
     <div class="tileset">
     ${spriteEmbeds}
     </div>
+    ${timelapseSVGs}
   </body>
 </html>
 `;
