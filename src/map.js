@@ -312,17 +312,23 @@ export const generateMapHTML = function (gameConfig, history) {
     }
   });
 
+  const MIN_DELAY = 100;
+  const MAX_DELAY = 2000;
+  const DEFAULT_DELAY = 300;
+
   const timelapseControlsHTML = gameConfig.createTimelapse
     ? `<div id="history">
       <h2 id="date">${lastDateString}</h2>
-      <div id="history-controls">
-        <button id="play">Play &#9654;</button>
-        <input type="range" id="history-slider" min="${firstDateSec}" max="${lastDateSec}" value="${lastDateSec}" disabled/>
-      </div>
-      <div id="speed-controls">
-        <label for="speed-slider">Speed</label>
-        <input type="range" id="speed-slider" min="200" max="2000" value="1500"/>
-      </div>
+      <button id="play">Play &#9654;</button>
+      <input type="range" id="history-slider" min="${firstDateSec}" max="${lastDateSec}" value="${lastDateSec}" disabled/>
+      <label for="speed-slider">Speed</label>
+      <input
+        id="speed-slider"
+        type="range" 
+        min="${MIN_DELAY}"
+        max="${MAX_DELAY}"
+        value="${MAX_DELAY - DEFAULT_DELAY}"
+      />
     </div>
     
     <script>
@@ -335,7 +341,7 @@ export const generateMapHTML = function (gameConfig, history) {
       let delay;
       const maxDelay = parseInt(speedSlider.getAttribute("max"));
       function updateDelay() {
-        delay = maxDelay - parseInt(speedSlider.value) + 200;
+        delay = maxDelay - parseInt(speedSlider.value) + ${MIN_DELAY};
       }
       updateDelay();
       speedSlider.addEventListener("input", updateDelay);
@@ -424,6 +430,8 @@ export const generateMapHTML = function (gameConfig, history) {
     .map {
       width: 100%;
       text-align: center;
+      margin-top: -2em;
+      z-index: -1;
     }
 
     .map svg {
@@ -470,43 +478,65 @@ export const generateMapHTML = function (gameConfig, history) {
       display: none;
     }
 
-    #date {
-      text-align: center;
-    }
-
-    #history-controls, #speed-controls {
+    nav {
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      gap: 0.2em;
+      width: 100%;
+      gap: 1em;
     }
 
-    #history-controls button, #speed-controls label {
-      width: 100%;
-      text-align: right;
+    #history {
+        display: grid;
+        grid-template: "date date" 1fr;
+        gap: 0.4em;
+        align-items: center;
+        border: 2px solid grey;
+        border-radius: 0.4em;
+        padding: 1em;
+        background-color: white;
+        box-shadow: 5px 5px 17px 0px rgba(0,0,0,0.33);
+        margin: 1em;
+    }
+
+    #date {
+      text-align: center;
+      grid-area: date;
     }
 
     #play {
       text-wrap: nowrap;
     }
+
+    #history label {
+      text-align: right;
+    }
+
+    #history input[type="range"] {
+      width: 15em;
+    }
+
     </style>
     
   </head>
   <body>
-    <h1>
-      <a href="https://gitterra.com/" target="_blank">
-        <img
-          id="logobanner"
-          src="https://gitterra.com/images/background_and_menus/logobanner.svg"
-        />
-      </a>
-    </h1>
-    <div id="feedback">
-      <a href="https://gitlab.com/gitterra/GitTerra/-/issues/new" target="_blank">
-        How can we make this game better?
-      </a>
-    </div>
-    ${timelapseControlsHTML}
+    <nav>
+      <div class="logo">
+        <h1>
+          <a href="https://gitterra.com/" target="_blank">
+            <img
+              id="logobanner"
+              src="https://gitterra.com/images/background_and_menus/logobanner.svg"
+            />
+          </a>
+        </h1>
+        <div id="feedback">
+          <a href="https://gitlab.com/gitterra/GitTerra/-/issues/new" target="_blank">
+            How can we make this game better?
+          </a>
+        </div>
+      </div>
+      ${timelapseControlsHTML}
+    </nav>
     ${mapSVG}
     <div class="tileset">
     ${spriteEmbeds}
