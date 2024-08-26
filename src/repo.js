@@ -9,6 +9,8 @@ export async function processRepo(gameConfig, SCC, folder) {
   const SCCResult = spawnSync(SCC, [
     folder,
     "--by-file",
+    "--no-cocomo",
+    "--no-complexity",
     "--format=json",
     `--output=${tempStatsFile}`,
   ]);
