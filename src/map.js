@@ -433,7 +433,6 @@ export const generateMapHTML = function (gameConfig, history) {
       width: 100%;
       text-align: center;
       margin-top: -2em;
-      z-index: -1;
     }
 
     .map svg {
@@ -485,6 +484,7 @@ export const generateMapHTML = function (gameConfig, history) {
       justify-content: space-between;
       width: 100%;
       gap: 1em;
+      z-index: 100;
     }
 
     #history {
