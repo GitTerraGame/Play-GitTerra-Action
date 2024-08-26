@@ -197,8 +197,9 @@ export const generateMapSVG = function (
       maxX = blockCoordinates.x;
     }
 
-    if (maxY < blockCoordinates.y) {
-      maxY = blockCoordinates.y;
+    // maxY should be as tall as the base max width)
+    if (maxY < blockCoordinates.x) {
+      maxY = blockCoordinates.x;
     }
 
     const sprite = getSprite(clusters[i - 1], sprites);
@@ -206,6 +207,7 @@ export const generateMapSVG = function (
     tiles.push({ sprite, blockCoordinates, language });
   }
 
+  // reserving as much height as there is width
   let mapWidth = maxX * tileWidth;
   let mapHeight = maxY * tileBaseHeight + (tallestSprite - tileBaseHeight);
 
@@ -256,8 +258,8 @@ export const generateMapSVG = function (
     data-date="${dateString}"
     class="map${hidden ? " hidden" : ""}"
   >${hidden ? "<!-- " : ""}
-    <svg viewBox="0 ${lowestIsoY} ${Math.ceil(mapWidth)} ${Math.ceil(
-    mapHeight - lowestIsoY
+    <svg viewBox="0 0 ${Math.ceil(mapWidth)} ${Math.ceil(
+    mapHeight
   )}" style="fill-rule:evenodd; clip-rule:evenodd; stroke-linecap:round; stroke-linejoin:round; stroke-miterlimit:1.5;">
       <title>${dateString}</title>
       ${tileImages.join("")}
