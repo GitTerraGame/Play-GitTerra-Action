@@ -5,6 +5,8 @@ pages:
   stage: play GitTerra
   image: node:latest
   needs: [GitTerra]
+  variables:
+    GIT_STRATEGY: none
   script:
     - echo "Deploying GitTerra page and history to GitLab Pages"
     - mkdir public/
