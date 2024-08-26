@@ -6,6 +6,10 @@ import {
   languageStringToHexColor,
 } from "./languages.js";
 
+const version = fs.existsSync("../package.json")
+  ? JSON.parse(fs.readFileSync("../package.json")).version
+  : null;
+
 /**
  * This function defines the algorythm for plotting city blocks maintaining the diamond shape.
  * The input is a sequential number of the block and the output are
@@ -517,6 +521,12 @@ export const generateMapHTML = function (gameConfig, history) {
       width: 15em;
     }
 
+    #version {
+      display: block;
+      margin-top: -1.3em;
+      font-size: small;
+    }
+
     </style>
     
   </head>
@@ -530,6 +540,7 @@ export const generateMapHTML = function (gameConfig, history) {
               src="https://gitterra.com/images/background_and_menus/logobanner.svg"
             />
           </a>
+          <span id="version">v${version}</span>
         </h1>
         <div id="feedback">
           <a href="https://gitlab.com/gitterra/GitTerra/-/issues/new" target="_blank">
