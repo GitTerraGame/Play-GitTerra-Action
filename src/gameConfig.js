@@ -8,7 +8,7 @@ import clusterize from "./clusterizers/orderedFileTree.js";
 export const defaultGameConfig = {
   tileSet: novaTerraPrime,
   minTiles: 10,
-  timelapseLookBackPerfRun: 20,
+  timelapseLookBackPerfRun: 200,
   createTimelapse: false,
   clusterize,
 };
