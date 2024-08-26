@@ -1,14 +1,23 @@
 import fs from "fs";
 import path from "path";
+import url from "url";
 
 import {
   languageStringToCSSClass,
   languageStringToHexColor,
 } from "./languages.js";
 
-const version = fs.existsSync("../package.json")
-  ? JSON.parse(fs.readFileSync("../package.json")).version
+const packageJSONname = url.fileURLToPath(
+  import.meta.resolve("../package.json")
+);
+
+const packageJSON = fs.existsSync(packageJSONname)
+  ? JSON.parse(fs.readFileSync(packageJSONname))
   : null;
+
+const version = packageJSON ? packageJSON.version : null;
+
+console.log("GitTerra Game Version:", version);
 
 /**
  * This function defines the algorythm for plotting city blocks maintaining the diamond shape.
@@ -540,7 +549,7 @@ export const generateMapHTML = function (gameConfig, history) {
               src="https://gitterra.com/images/background_and_menus/logobanner.svg"
             />
           </a>
-          <span id="version">v${version}</span>
+          <span id="version">${version ? `v${version}` : ""}</span>
         </h1>
         <div id="feedback">
           <a href="https://gitlab.com/gitterra/GitTerra/-/issues/new" target="_blank">
