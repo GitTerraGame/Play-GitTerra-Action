@@ -4,7 +4,7 @@ import fs from "fs";
 // our own modules
 import { generateMapHTML } from "./map.js";
 import { getGameConfig } from "./gameConfig.js";
-import { getFullHistory, getLastCommitistory } from "./history.js";
+import { getFullHistory, getLastCommit } from "./history.js";
 
 // Constants
 const mapOutput = "index.html";
@@ -34,7 +34,7 @@ console.log("[Game Configuration]\n", gameConfig);
 
 const history = gameConfig.createTimelapse
   ? await getFullHistory(gameConfig, SCC, folder)
-  : await getLastCommitistory(gameConfig, SCC, folder);
+  : await getLastCommit(gameConfig, SCC, folder);
 
 const mapHTML = generateMapHTML(gameConfig, history);
 fs.writeFileSync(mapOutput, mapHTML);

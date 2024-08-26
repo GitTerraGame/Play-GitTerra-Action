@@ -127,7 +127,7 @@ export async function getFullHistory(gameConfig, SCC, folder) {
  * @param {*} gameConfig
  * @returns
  */
-export async function getLastCommitistory(gameConfig, SCC, folder) {
+export async function getLastCommit(gameConfig, SCC, folder) {
   const history = new Map();
 
   history.set(new Date().toDateString(), {
