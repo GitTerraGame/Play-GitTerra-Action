@@ -242,6 +242,13 @@ We also use [SCC](https://github.com/boyter/scc), a code analysis software by Be
 
 We also use language color info from GitHub [linguist](https://github.com/github-linguist/linguist) project, which is licensed under the [MIT License](LICENSE.linguist.md).
 
+## More Maps
+
+Here are a few maps of some interesting repositories:
+
+- [React](https://gitterragame.github.io/sample-repo-huge-and-old-react/) (fork)
+- [Inkscape](https://gitterra.gitlab.io/large-and-old/) (fork)
+
 ## Maintenance
 
 ### Publishing a new version
