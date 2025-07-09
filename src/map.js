@@ -17,7 +17,17 @@ const packageJSON = fs.existsSync(packageJSONname)
 
 const version = packageJSON ? packageJSON.version : null;
 
-console.log("GitTerra Game Version:", version);
+console.log(`                                                                                     v${version}
+  ▄██████▄   ▄█      ███         ███        ▄████████    ▄████████    ▄████████    ▄████████
+  ███    ███ ███  ▀█████████▄ ▀█████████▄   ███    ███   ███    ███   ███    ███   ███    ███
+  ███    █▀  ███▌    ▀███▀▀██    ▀███▀▀██   ███    █▀    ███    ███   ███    ███   ███    ███
+ ▄███        ███▌     ███   ▀     ███   ▀  ▄███▄▄▄      ▄███▄▄▄▄██▀  ▄███▄▄▄▄██▀   ███    ███
+▀▀███ ████▄  ███▌     ███         ███     ▀▀███▀▀▀     ▀▀███▀▀▀▀▀   ▀▀███▀▀▀▀▀   ▀███████████
+  ███    ███ ███      ███         ███       ███    █▄  ▀███████████ ▀███████████   ███    ███
+  ███    ███ ███      ███         ███       ███    ███   ███    ███   ███    ███   ███    ███
+  ████████▀  █▀      ▄████▀      ▄████▀     ██████████   ███    ███   ███    ███   ███    █▀
+                                                         ███    ███   ███    ███    
+`);
 
 /**
  * This function defines the algorythm for plotting city blocks maintaining the diamond shape.
