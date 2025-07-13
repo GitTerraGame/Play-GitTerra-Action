@@ -10,6 +10,7 @@ export const defaultGameConfig = {
   minTiles: 10,
   timelapseLookBackPerfRun: 200,
   createTimelapse: false,
+  destinationURL: null,
   clusterize,
 };
 
