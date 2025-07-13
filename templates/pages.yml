@@ -11,6 +11,7 @@ pages:
     - echo "Deploying GitTerra page and history to GitLab Pages"
     - mkdir public/
     - mv index.html public/
+    - mv map.png public/
     - |
       if [[ -f history.json ]]; then
         mv history.json public/
