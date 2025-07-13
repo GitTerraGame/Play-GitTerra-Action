@@ -417,6 +417,8 @@ export const generateMapHTML = function (gameConfig, history) {
     <meta property="og:title" content="Your Repo Map | GitTerra"/>
     <meta property="og:description" content="A map of the world built from your code repo"/>
     <meta property="og:image" content="map.png"/>
+    <meta property="og:image:alt" content="A map of the world built from your code repo"/>
+    <meta property="og:type" content="website"/>
 
     <link rel="icon" type="image/png" href="https://gitterra.com/images/logo.png" />
     <title>Your Repo Map | GitTerra</title>
