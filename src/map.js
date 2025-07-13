@@ -411,14 +411,22 @@ export const generateMapHTML = function (gameConfig, history) {
     </script>`
     : "";
 
+  let ogTags = `<meta property="og:title" content="Your Repo Map | GitTerra"/>
+      <meta property="og:description" content="A map of the world automatically built from your code repo using GitTerra"/>
+      <meta property="og:image:alt" content="A map of the world built from your code repo"/>
+      <meta property="og:type" content="website"/>`;
+
+  if (gameConfig.destinationURL) {
+    ogTags += `<meta property="og:url" content="${gameConfig.destinationURL}"/>
+      <meta property="og:image" content="${gameConfig.destinationURL}/map.png"/>`;
+  } else {
+    ogTags += `<meta property="og:image" content="map.png"/>`;
+  }
+
   return `<!doctype html>
 <html>
   <head>
-    <meta property="og:title" content="Your Repo Map | GitTerra"/>
-    <meta property="og:description" content="A map of the world built from your code repo"/>
-    <meta property="og:image" content="map.png"/>
-    <meta property="og:image:alt" content="A map of the world built from your code repo"/>
-    <meta property="og:type" content="website"/>
+    ${ogTags}
 
     <link rel="icon" type="image/png" href="https://gitterra.com/images/logo.png" />
     <title>Your Repo Map | GitTerra</title>
