@@ -116,4 +116,5 @@ runs:
         name: gitterra
         path: |
           index.html
+          map.png
           history.json

@@ -414,11 +414,10 @@ export const generateMapHTML = function (gameConfig, history) {
   return `<!doctype html>
 <html>
   <head>
-    <meta
-      property="og:image"
-      content="https://gitterra.com/images/background_and_menus/logobanner.svg"
-    />
-    <meta property="og:image:type" content="image/svg" />
+    <meta property="og:title" content="Your Repo Map | GitTerra"/>
+    <meta property="og:description" content="A map of the world built from your code repo"/>
+    <meta property="og:image" content="map.png"/>
+
     <link rel="icon" type="image/png" href="https://gitterra.com/images/logo.png" />
     <title>Your Repo Map | GitTerra</title>
     <style>

@@ -5,9 +5,13 @@ import fs from "fs";
 import { generateMapHTML } from "./map.js";
 import { getGameConfig } from "./gameConfig.js";
 import { getFullHistory, getLastCommit } from "./history.js";
+import screenshot from "./screenshot.js";
 
 // Constants
 const mapOutput = "index.html";
+const screenshotOutput = "map.png";
+const screenshotWidth = 1200;
+const screenshotHeight = 630;
 
 let folder;
 if (process.argv.length >= 3) {
@@ -38,3 +42,11 @@ const history = gameConfig.createTimelapse
 
 const mapHTML = generateMapHTML(gameConfig, history);
 fs.writeFileSync(mapOutput, mapHTML);
+
+screenshot(
+  mapOutput,
+  screenshotWidth,
+  screenshotHeight,
+  screenshotOutput,
+  8080
+);
