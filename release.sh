@@ -16,7 +16,7 @@ echo "🚀 Starting a '$BUMP_TYPE' release..."
 npm version "$BUMP_TYPE" -m "chore(release): v%s"
 
 # 2. Push commit and tags
-git push --follow-tags
+git push all --follow-tags
 
 # 3. Create GitHub release
 TAG_NAME=$(git describe --tags --abbrev=0)
