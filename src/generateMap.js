@@ -29,16 +29,6 @@ if (process.argv.length >= 4) {
   process.exit(1);
 }
 
-let destinationURL;
-if (process.argv.length >= 5) {
-  destinationURL = process.argv[4];
-}
-
-// if destinationURL is set by workflow and config does not have it set, use it
-if (!gameConfig.destinationURL && destinationURL) {
-  gameConfig.destinationURL = destinationURL;
-}
-
 let gameConfig = await getGameConfig(
   `${folder}/.gitterra.config.mjs`,
   `${folder}/.gitterra.config.js`
