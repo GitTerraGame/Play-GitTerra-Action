@@ -24,6 +24,8 @@ jobs:
     steps:
       - name: Play GitTerra 🎮
         uses: GitTerraGame/Play-GitTerra@main
+        with:
+          deploy-destination: https://gitterragame.github.io/Play-GitTerra-Action/
   deploy-gitterra-to-gh-pages:
     needs: play-gitterra
     environment:
