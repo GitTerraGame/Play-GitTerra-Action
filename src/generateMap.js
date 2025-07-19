@@ -34,6 +34,16 @@ let gameConfig = await getGameConfig(
   `${folder}/.gitterra.config.js`
 );
 
+let destinationURL;
+if (process.argv.length >= 5) {
+  destinationURL = process.argv[4];
+}
+
+// if destinationURL is set by workflow and config does not have it set, use it
+if (!gameConfig.destinationURL && destinationURL) {
+  gameConfig.destinationURL = destinationURL;
+}
+
 console.log("[Game Configuration]\n", gameConfig);
 
 const history = gameConfig.createTimelapse
