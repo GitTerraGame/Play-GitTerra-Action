@@ -253,7 +253,10 @@ Here are a few maps of some interesting repositories:
 
 ### Publishing a new version
 
-- Update the version in `package.json`
-- Create a tag with the new version, e.g. 'v1.2.3'
-- Push the tag to both GitHub and GitLab repositories by running a command like `git push all v1.2.3` (if you have a remote named `all` that points to both GitHub and GitLab repositories) or `git push github v1.2.3 && git push gitlab v1.2.3` if you have separate remotes for GitHub and GitLab
-- Manually [create a new release on GitHub](https://github.com/GitTerraGame/Play-GitTerra-Action/releases) with the same tag name and add release notes. No additional steps needed for GitLab as it will automatically create a release based on the tag
+We now have a script for that, so you can just run `npm run release` to publish a minor version of the game.
+
+It will bump the version in `package.json`, create a new tag, push it to GitHub and create a new release with the latest commit message as the release notes.
+
+By default it makes a `patch` release, but you can also make a `minor` release by running `npm run release:minor`.
+
+If you're making a major release, you can figure it out, but make sure you mean it.
