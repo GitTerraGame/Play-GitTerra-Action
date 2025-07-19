@@ -94,7 +94,7 @@ runs:
       continue-on-error: true
 
     - name: Building the city of GitTerra
-      run: node builders/src/generateMap.js scrolls/ wizard/scc
+      run: node builders/src/generateMap.js scrolls/ wizard/scc "${{ inputs.deploy-destination }}"
       shell: "bash"
 
     - name: Updating history archives
