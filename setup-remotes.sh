@@ -6,8 +6,8 @@ set -e
 # IMPORTANT: Please verify these URLs are correct for your repository.
 # These are educated guesses based on your project structure.
 # You can use either SSH (git@...) or HTTPS (https://...) URLs.
-GITHUB_URL="git@github.com:GitTerraGame/GitTerra_CI.git"
-GITLAB_URL="git@gitlab.com:gitterra/GitTerra_CI.git"
+GITHUB_URL="git@github.com:GitTerraGame/Play-GitTerra-Action.git"
+GITLAB_URL="git@gitlab.com:gitterra/GitTerra.git"
 # --- End Configuration ---
 
 # Function to check if a remote exists
