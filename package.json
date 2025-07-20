@@ -9,7 +9,8 @@
     "test:sergeyche": "cd test && rm -f index.html && node ../src/generateMap.js ~/sergeychernyshev.com/ /usr/local/bin/scc && open-cli index.html",
     "clean-test": "cd test && rm -f index.html history.json",
     "release": "./release.sh patch",
-    "release:minor": "./release.sh minor"
+    "release:minor": "./release.sh minor",
+    "setup:remotes": "./setup-remotes.sh"
   },
   "keywords": [
     "game",

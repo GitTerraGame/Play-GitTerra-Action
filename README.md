@@ -251,6 +251,10 @@ Here are a few maps of some interesting repositories:
 
 ## Maintenance
 
+### Configuring remotes
+
+To work on the project, you need to have both GitHub and GitLab remotes configured. You can do that by running the `npm run setup:remotes` script in the root of the repository.
+
 ### Publishing a new version
 
 We now have a script for that, so you can just run `npm run release` to publish a minor version of the game.
