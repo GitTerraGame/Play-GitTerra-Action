@@ -6,6 +6,7 @@ import simpleGit from "simple-git";
 
 // our own modules
 import { processRepo } from "./repo.js";
+import { generatePlayersByDate } from "./players.js"
 
 export const historyRecord = "history.json";
 
@@ -40,6 +41,9 @@ export async function getFullHistory(gameConfig, SCC, folder) {
   const log = await git.log();
 
   console.log("Total commits:", log.total);
+
+  // get players from the repo
+  const playersByDate = generatePlayersByDate(log);
 
   // Get latest commit per day
   const commitsToDisplay = log.all.reduce((acc, commit) => {
