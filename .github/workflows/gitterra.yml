@@ -58,4 +58,5 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const addGitterraPRComment = require('@gitterra/pr-comment');
+            console.log(addGitterraPRComment);
             await addGitterraPRComment({github, context});
