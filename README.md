@@ -147,6 +147,12 @@ jobs:
           build_command: "echo Skipping building the web files"
 ```
 
+### Add a PR comment with map preview and link
+
+We created the [Gitterra PR Comment](https://github.com/marketplace/actions/gitterra-pr-comment) GitHub Action that you can add to your `.github/workflows/gitterra.yml` file to automatically add a comment to your pull request (after they are merged) with a preview and a link to the map.
+
+See [the action documentation](https://github.com/marketplace/actions/gitterra-pr-comment#usage) for documentation on how to use it.
+
 ### Add a badge to you README
 
 To add a clickable badge at the top of your repo README file, use the following markdown code:
