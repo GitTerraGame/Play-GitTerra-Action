@@ -11,7 +11,7 @@ permissions:
   contents: read
   pages: write
   id-token: write
-  pull-requests: write
+  pull-requests: write # Allows the action to add a comment to the pull request
 
 # Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
 # However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
@@ -49,13 +49,7 @@ jobs:
   add-pr-comment:
     name: Add PR comment with GitTerra map link
     runs-on: ubuntu-latest
-    needs: deploy-gitterra-to-gh-pages
+    needs: deploy-gitterra-to-gh-pages # Ensures this job runs after deployment job
     steps:
-      - uses: actions/checkout@v4
-      - run: npm install @gitterra/pr-comment
-      - uses: actions/github-script@v7
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const addGitterraPRComment = require('@gitterra/pr-comment');
-            await addGitterraPRComment.default({github, context});
+      - name: Leave a 💬 comment on PR with preview 🗺️ image and 🔗 link to the site
+        uses: GitTerraGame/pr-comment@main # Calls the PR Comment action
