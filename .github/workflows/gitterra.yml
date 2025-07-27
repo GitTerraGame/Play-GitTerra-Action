@@ -8,9 +8,9 @@ on:
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: read # Allows the action to read the repository contents
+  pages: write # Allows the action to deploy to GitHub Pages
+  id-token: write # Allows the action to request an ID token for authentication
   pull-requests: write # Allows the action to add a comment to the pull request
 
 # Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
@@ -53,3 +53,5 @@ jobs:
     steps:
       - name: Leave a 💬 comment on PR with preview 🗺️ image and 🔗 link to the site
         uses: GitTerraGame/pr-comment@main # Calls the PR Comment action
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }} # Provide the GitHub token to authenticate with the GitHub API
