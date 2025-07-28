@@ -45,7 +45,10 @@ Most commonly, if your repository uses the legacy `master` branch instead of the
 
 ### Deploy the map to GitHub Pages
 
-If you don't use GitHub Pages hosting for anything else in your repo, it might be the easiest place to put your GitTerra map. You just need to add some permissions and one more job to the `.github/workflows/gitterra.yml` workflow file. Here's the full workflow you can use:
+> [!WARNING]
+> Don't use this if you already use GitHub Pages in your project or it will override your main GitHub Pages website with GitTerra map!
+
+It might be the easiest place to put your GitTerra map. You just need to add some permissions and one more job to the `.github/workflows/gitterra.yml` workflow file. Here's the full workflow you can use:
 
 ```yaml
 name: Play GitTerra
@@ -179,6 +182,9 @@ stages:
 
 ### Deploy the map to GitLab Pages
 
+> [!WARNING]
+> Don't use this if you already use GitLab Pages in your project or it will override your main GitLab Pages website with GitTerra map!
+
 If you don't use GitLab Pages hosting for anything else in your repo, it might be the easiest place to put your GitTerra map. You just need to add `GitTerra/pages` component to `.gitlab-ci.yml` file (in the root of the repository). Here's the full pipeline you can use:
 
 ```yaml
@@ -190,24 +196,22 @@ stages:
   - play GitTerra
 ```
 
-Please don't use this if you already use GitLab Pages in your project - this will override your main GitLab Pages website with GitTerra map.
-
 ## Configuring the game
 
-If you'd like to configure the game, you can do so by adding a `.gitterra.config.mjs` file to the root of your repository. Here's an example of such a file:
+If you'd like to configure the game, you can do so by adding a `.gitterra.config.js` file to the root of your repository. Here's an example of such a file:
 
 ```js
-module.exports = function (config) {
+export default (config) => {
   config.minTiles = 5;
 
   return config;
 };
 ```
 
-or if your project uses ES6 modules (e.g. your `package.json` contains `"type": "module"` property):
+or if your project uses CommonJS format (e.g. your `package.json` contains `"type": "commonjs"` property):
 
 ```js
-export default (config) => {
+module.exports = function (config) {
   config.minTiles = 5;
 
   return config;

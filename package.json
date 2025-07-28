@@ -4,10 +4,10 @@
   "description": "A git-based game running in CI/CD and played by coding",
   "main": "src/generateMap.js",
   "scripts": {
-    "test": "cd test && rm -f index.html && node ../src/generateMap.js ../ /usr/local/bin/scc && open-cli index.html",
+    "test": "cd test && ./test.sh",
     "test:repo": "cd test && rm -f index.html && node ../src/generateMap.js ~/GitTerra_TestRepo/ /usr/local/bin/scc && open-cli index.html",
     "test:sergeyche": "cd test && rm -f index.html && node ../src/generateMap.js ~/sergeychernyshev.com/ /usr/local/bin/scc && open-cli index.html",
-    "clean-test": "cd test && rm -f index.html map.png history.json",
+    "clean:test": "cd test && rm -f index.html map.png history.json */index.html */map.png */history.json",
     "release": "./release.sh patch",
     "release:minor": "./release.sh minor",
     "setup:remotes": "./setup-remotes.sh"

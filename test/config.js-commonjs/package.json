@@ -1,0 +1,5 @@
+{
+  "name": "test-package-cjs",
+  "version": "0.0.1",
+  "type": "commonjs"
+}

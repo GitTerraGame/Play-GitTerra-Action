@@ -31,6 +31,7 @@ if (process.argv.length >= 4) {
 
 let gameConfig = await getGameConfig(
   `${folder}/.gitterra.config.mjs`,
+  `${folder}/.gitterra.config.cjs`,
   `${folder}/.gitterra.config.js`
 );
 
