@@ -90,5 +90,3 @@ export default async function screenshot(
     console.log("Error: ", error.message);
   }
 }
-
-screenshot();
