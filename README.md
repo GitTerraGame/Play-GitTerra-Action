@@ -59,14 +59,14 @@ on:
     branches:
       - main
 
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
-# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+# Allow only one concurrent deployment, skipping runs queued between
+# the run in-progress and the latest queued. Do NOT cancel in-progress
+# runs — let production deployments complete.
 concurrency:
   group: "pages"
   cancel-in-progress: false
@@ -77,6 +77,7 @@ jobs:
     steps:
       - name: Play GitTerra 🎮
         uses: GitTerraGame/Play-GitTerra-Action@main
+
   deploy-gitterra-to-gh-pages:
     if: github.ref == 'refs/heads/main'
     needs: play-gitterra
@@ -85,18 +86,18 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: gitterra
       - name: Setup Pages
-        uses: actions/configure-pages@v4
+        uses: actions/configure-pages@v6
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: "."
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
 ```
 
 Keep in mind that you have to go to the repository settings and pick `GitHub Actions` as a source in "Build and Deployment" section of GitHub Pages settings for your repo. We didn't want to automate that configuration for you, to make sure you don't replace your production website with this.
@@ -131,11 +132,11 @@ jobs:
     runs-on: ubuntu-latest
     name: "Deploy GItTerra map to Netlify"
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: gitterra
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: "."
       - name: "Deploy to Netlify"
