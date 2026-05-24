@@ -21,7 +21,7 @@ runs:
       shell: "bash"
 
     - name: Opening the scrolls of wisdom
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
       with:
         path: "scrolls"
         fetch-depth: ${{ inputs.fetch-depth }}
@@ -29,7 +29,7 @@ runs:
 
     - name: Inviting a wizard from a distant land
       id: cache-scc
-      uses: actions/cache@v4
+      uses: actions/cache@v5
       env:
         cache-name: our-wizard
       with:
@@ -46,14 +46,14 @@ runs:
       shell: "bash"
 
     - name: Transporting builders to the construction site
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
       with:
         repository: "GitTerraGame/Play-GitTerra-Action"
         path: "builders"
 
     - name: Looking for a stash of existing tools
       id: cache-npm
-      uses: actions/cache@v4
+      uses: actions/cache@v5
       env:
         cache-name: tool-stash
       with:
@@ -77,7 +77,7 @@ runs:
     - name: Checking history archives
       if: ${{ inputs.deploy-destination == '' }}
       id: cache-history-restore
-      uses: actions/cache/restore@v4
+      uses: actions/cache/restore@v5
       env:
         cache-name: history
       with:
@@ -100,7 +100,7 @@ runs:
     - name: Updating history archives
       if: ${{ inputs.deploy-destination == '' }}
       id: cache-history-update
-      uses: actions/cache/save@v4
+      uses: actions/cache/save@v5
       env:
         cache-name: history
       with:
@@ -111,7 +111,7 @@ runs:
         key: ${{ env.cache-name }}-${{ github.ref }}-${{ hashFiles('history.json') }}
 
     - name: Archive the maps in the player's library
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: gitterra
         path: |
